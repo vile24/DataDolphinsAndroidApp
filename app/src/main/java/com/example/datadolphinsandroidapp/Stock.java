@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 import com.example.datadolphinsandroidapp.db.AppDataBase;
 
 @Entity(tableName = AppDataBase.STOCK_VALUE_TABLE)
-public class StockValue {
+public class Stock {
     /**
      * variables
      */

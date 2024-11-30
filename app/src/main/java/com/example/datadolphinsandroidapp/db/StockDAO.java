@@ -10,31 +10,31 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.datadolphinsandroidapp.StockValue;
+import com.example.datadolphinsandroidapp.Stock;
 
 import java.util.List;
 
 /**Data access object*/
 @Dao
-public interface StockValueDAO {
+public interface StockDAO {
 
     @Insert
-    void insert(StockValue... StockValues);
+    void insert(Stock... StockValues);
 
     @Update
-    void update(StockValue... StockValues);
+    void update(Stock... StockValues);
 
     @Delete
-    void deleted(StockValue... StockValues);
+    void deleted(Stock... StockValues);
 
     /**
      * @return a list of stock value objects from table
      */
     @Query("SELECT * FROM " + AppDataBase.STOCK_VALUE_TABLE)
-    List<StockValue> getStockValues();
+    List<Stock> getStockValues();
 
     @Query("SELECT * FROM " + AppDataBase.STOCK_VALUE_TABLE + "WHERE stockID = :stockID")
-    StockValue getStockValuesByID(int stockID);
+    Stock getStockValuesByID(int stockID);
 
 
 
