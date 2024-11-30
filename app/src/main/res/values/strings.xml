@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">DataDolphinsAndroidApp</string>
+
+    <!--this will have to be modified to the stock class
+    <string name="mainExerciseHint">Enter Exercise</string>
+    <string name="mainWeightHint">Enter Weight</string>
+    <string name="mainRepsHint">Enter Reps</string>
+    <string name="mainSubmitButton">Submit</string>
+    -->
 </resources>
