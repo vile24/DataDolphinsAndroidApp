@@ -1,5 +1,5 @@
 /**
- *
+ *Database
  */
 
 package com.example.datadolphinsandroidapp.db;
