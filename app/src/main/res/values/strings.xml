@@ -6,4 +6,5 @@
     <string name="new_user">New User</string>
     <string name="done">Done</string>
     <string name="back">Back</string>
+    <string name="user_s_portfolio"><![CDATA[<User>\'s Portfolio]]></string>
 </resources>

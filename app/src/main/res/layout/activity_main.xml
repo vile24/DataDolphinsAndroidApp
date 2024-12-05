@@ -8,12 +8,22 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/mainTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="@string/user_s_portfolio"
+        android:textSize="40sp"
+        />
+
+    <Button
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/mainTitle"
+        android:layout_width="200dp"
+        android:layout_height="90dp"
+        android:textSize="40sp"
+        android:text="@string/back"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
