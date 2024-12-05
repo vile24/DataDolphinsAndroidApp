@@ -1,4 +1,4 @@
-package com.example.datadolphinsandroidapp;
+package com.example.datadolphinsandroidapp.database.entities;
 import java.math.BigDecimal;
 public class Transaction {
 
