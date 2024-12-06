@@ -7,4 +7,8 @@
     <string name="done">Done</string>
     <string name="back">Back</string>
     <string name="user_s_portfolio"><![CDATA[<User>\'s Portfolio]]></string>
+    <string name="portfolio_placeholder">Current Balance:&#xA;$000&#xA;Portfolio Value:&#xA;$000&#xA;Total Balance:&#xA;$000 </string>
+    <string name="verify_password">Verify Password</string>
+    <string name="new_password">New Password</string>
+    <string name="new_username">New UserName</string>
 </resources>
