@@ -15,7 +15,14 @@ public class User {
         this.password = password;
     }
 
-
+    public boolean newUser(String user_name, String password1,String password2){
+        //TODO check if user already exists
+        if (password1.equals(password2)){
+            User test = new User(user_name,password1);
+            return true;
+        }
+        return false;
+    }
 
     /*
     Basic Get-Sets
