@@ -2,11 +2,11 @@ package com.example.datadolphinsandroidapp;
 
 import com.example.datadolphinsandroidapp.database.entities.User;
 
-@Dao
+//@Dao
 public interface UserDAO {
 
     //TODO make this work for admin
-    @Delete
+    // @Delete
     void delete (User user);
 
 }

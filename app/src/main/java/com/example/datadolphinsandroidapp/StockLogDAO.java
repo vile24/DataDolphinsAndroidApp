@@ -1,6 +1,6 @@
 package com.example.datadolphinsandroidapp;
 
-@dao
+// @dao
 public interface StockLogDAO {
 
 }

@@ -19,7 +19,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_percent="0.90"
-
         />
 
     <EditText
@@ -30,6 +29,7 @@
         android:autofillHints="Username"
         android:gravity="center"
         android:hint="@string/username"
+        android:layout_width="0dp"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
