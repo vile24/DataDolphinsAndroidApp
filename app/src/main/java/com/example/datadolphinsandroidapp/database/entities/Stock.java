@@ -2,11 +2,11 @@ package com.example.datadolphinsandroidapp.database.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.datadolphinsandroidapp.database.StockDatabase;
+import com.example.datadolphinsandroidapp.database.StockPortfolioDatabase;
 
 import java.util.Objects;
 
-@Entity(tableName = StockDatabase.STOCK_TABLE)
+@Entity(tableName = StockPortfolioDatabase.STOCK_TABLE)
 public class Stock {
     @PrimaryKey(autoGenerate = true)
     private int stockId;

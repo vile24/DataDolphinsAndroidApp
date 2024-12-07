@@ -22,17 +22,17 @@ public interface StockDAO {
 
 
 
-    @Query("DELETE FROM " + StockDatabase.STOCK_TABLE)
+    @Query("DELETE FROM " + StockPortfolioDatabase.STOCK_TABLE)
     void deleteAll();
 
-    @Query("SELECT * FROM " + StockDatabase.STOCK_TABLE + " WHERE ticker == :ticker LIMIT 1")
+    @Query("SELECT * FROM " + StockPortfolioDatabase.STOCK_TABLE + " WHERE ticker == :ticker LIMIT 1")
     LiveData<Stock> getStockByTicker(String ticker);
 
-    @Query("SELECT * FROM " + StockDatabase.STOCK_TABLE + " WHERE stockId == :stockId")
+    @Query("SELECT * FROM " + StockPortfolioDatabase.STOCK_TABLE + " WHERE stockId == :stockId")
     LiveData<List<Stock>> getRecordersetStockIdLiveData(int stockId);
 
 
-    @Query("SELECT * FROM " + StockDatabase.STOCK_TABLE)
+    @Query("SELECT * FROM " + StockPortfolioDatabase.STOCK_TABLE)
     List<Stock> getAllRecords();
 
 }
