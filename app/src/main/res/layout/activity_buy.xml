@@ -89,7 +89,7 @@
         app:layout_constraintTop_toBottomOf="@+id/quantityInputEditText" />
 
     <TextView
-        android:id="@+id/availableCashBalance_placeholder"
+        android:id="@+id/availableCashBalancePlaceholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -116,16 +116,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.112"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/availableCashBalance_placeholder" />
+        app:layout_constraintTop_toBottomOf="@+id/availableCashBalancePlaceholder" />
 
     <TextView
-        android:id="@+id/cost_placeholder"
+        android:id="@+id/costPlaceholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:autofillHints="none"
-        android:hint="@string/dollar_sign"
         android:padding="10dp"
         android:text="@string/total_0_00"
         android:textSize="26sp"
@@ -144,6 +143,6 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cost_placeholder" />
+        app:layout_constraintTop_toBottomOf="@+id/costPlaceholder" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

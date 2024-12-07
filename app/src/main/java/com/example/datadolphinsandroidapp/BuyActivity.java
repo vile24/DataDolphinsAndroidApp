@@ -3,15 +3,15 @@ package com.example.datadolphinsandroidapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 
 import com.example.datadolphinsandroidapp.database.StockRepository;
-import com.example.datadolphinsandroidapp.database.entities.Stock;
 import com.example.datadolphinsandroidapp.databinding.ActivityBuyBinding;
 
 import java.util.Locale;
@@ -25,7 +25,10 @@ public class BuyActivity extends AppCompatActivity {
     public static final String TAG = "DAC_STOCK";
 
     String ticker = "";
-    int mQuantity = 0;
+    int quantity = 0;
+
+    double totalCost = 0.0;   // cost * qty
+    double balance = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +38,8 @@ public class BuyActivity extends AppCompatActivity {
 
         // Get the ticker passed from MainActivity
         Intent intent = getIntent();
+        initBalanceDisplay();
         ticker = intent.getStringExtra(EXTRA_TICKER);
-
         if (ticker != null) {
             Log.d(TAG, "Ticker received: " + ticker);
             // You can now use `ticker` to perform database queries or update UI
@@ -48,61 +51,38 @@ public class BuyActivity extends AppCompatActivity {
 
         repository = StockRepository.getRepository(getApplication());
 
+        // Display est. totalCost after user input ticker & qty
+        binding.quantityInputEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                if(s.length() != 0)
+                    verifyTicker();
+            }
+        });
+
         binding.buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                verifyTicker();
+                // TODO : make a confirm buy
+                if (balance < totalCost) {
+                    Toast.makeText(BuyActivity.this, "Not Enough Balance!", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(BuyActivity.this, "Buy Successful!", Toast.LENGTH_LONG).show();
+                    balance = balance - totalCost;
+                    initBalanceDisplay();
+                }
             }
         });
+
     }
-//    private void verifyTicker() {
-//        String ticker = binding.stock.getText().toString().trim();
-//        if (ticker.isEmpty()) {
-//            toastMaker("Ticker should not be blank.");
-//            return;
-//        }
-//        // Get quantity input
-//        try {
-//            mQuantity = Integer.parseInt(binding.quantityInputEditText.getText().toString().trim());
-//        } catch (NumberFormatException e) {
-//            toastMaker("Please enter a valid quantity.");
-//            return;
-//        }
-//
-//        // Query the database for the ticker
-//        repository.getStockByTicker(ticker).observe(this, stock -> {
-//            if (stock != null) {
-//                double cost = stock.getCost();
-//                double total = cost * mQuantity;
-//
-//                binding.costPlaceholder.setText(String.format(Locale.US, "%.2f", total));
-//            } else {
-//                toastMaker(String.format("%s is not a valid ticker", ticker));
-//                // set cursor to the beginning
-//                binding.tickerInputEditText.setSelection(0);
-//            }
-//        });
-//
-////        // tell database go find this user...database look for user if finds it, return it back
-////        LiveData<Stock> userObserver = repository.getStockByTicker(ticker);
-////        // Observer is going to wait and observe the call the db and wait for something to come back
-////        stockObserver.observe(this, stock -> {
-////            if (stock != null) {
-////                String inputTicker = binding.tickerInEditText.getText().toString();
-////                if (inputTicker.equals(stock.getTicker())) {
-////                    startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), stock.getStockId()));
-////                } else {
-////                    toastMaker("Invalid ticker");
-////                    binding.tickerInEditText.setSelection(0);
-////                }
-////            } else {
-////                toastMaker(String.format("%s is not a valid ticker, ", ticker));
-////                binding.tickerInEditText.setSelection(0);
-////            }
-////        });
-//    }
-//
-//
 
     private void verifyTicker() {
         // Get ticker input from activity_buy.xml
@@ -116,7 +96,7 @@ public class BuyActivity extends AppCompatActivity {
 
         // Get quantity input
         try {
-            mQuantity = Integer.parseInt(binding.quantityInputEditText.getText().toString().trim());
+            quantity = Integer.parseInt(binding.quantityInputEditText.getText().toString().trim());
         } catch (NumberFormatException e) {
             toastMaker("Please enter a valid quantity.");
             return;
@@ -126,14 +106,16 @@ public class BuyActivity extends AppCompatActivity {
         repository.getStockByTicker(ticker).observe(this, stock -> {
             if (stock != null) {
                 double cost = stock.getCost();
-                double total = cost * mQuantity;
+                totalCost = cost * quantity;
 
                 // Update the cost placeholder with the calculated total
-                binding.costPlaceholder.setText(String.format(Locale.US, "%.2f", total));
+                binding.costPlaceholder.setText(String.format(Locale.US, "$%.2f", totalCost));
             } else {
                 toastMaker(String.format("%s is not a valid ticker", ticker));
                 // Reset cursor to the beginning of the input
                 binding.tickerInputEditText.setSelection(0);
+                // Clear the costPlaceholder field
+               // binding.costPlaceholder.setText("");
             }
         });
     }
@@ -152,18 +134,19 @@ public class BuyActivity extends AppCompatActivity {
 
         // mQuantity needs to try/catch because input might be a string instead of a number
         try {
-            mQuantity = Integer.parseInt(binding.quantityInputEditText.getText().toString());
+            quantity = Integer.parseInt(binding.quantityInputEditText.getText().toString());
         } catch (NumberFormatException e) {
             Log.i(TAG, "Error reading value from quantity edit text.");
         }
     }
 
-    // TODO: read in user input, compare and get cost
-
-    // TODO: read in user input for quantity
-
-    // When there's buy activity, create a transaction that have Ticker, quantity, cost
-    // for display you need total.
+    // Set initial balance in display
+    private void initBalanceDisplay() {
+        binding.availableCashBalancePlaceholder.setText(String.format(Locale.US, "$%.2f", balance));;
+        binding.tickerInputEditText.setText("");
+        binding.quantityInputEditText.setText("");
+        binding.costPlaceholder.setText("$0.0");
+    }
 
     public void toastMaker(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -173,6 +156,5 @@ public class BuyActivity extends AppCompatActivity {
     public static Intent buyIntentFactory(Context context) {
         return new Intent(context, BuyActivity.class);
     }
-
 
 }
