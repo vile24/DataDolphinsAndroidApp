@@ -1,54 +1,75 @@
 package com.example.datadolphinsandroidapp.database.entities;
-import java.math.BigDecimal;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import com.example.datadolphinsandroidapp.database.StockDatabase;
+
+import java.util.Objects;
+
+@Entity(tableName = StockDatabase.STOCK_TABLE)
 public class Stock {
-    private Integer stock;
-    private String ticker_symbol;
-    private String company_name;
-    private BigDecimal base_price;
+    @PrimaryKey(autoGenerate = true)
+    private int stockId;
+    private String ticker;
+    private String company;
+    private double cost;
 
     /*
     Stock constructor
      */
-    public Stock(Integer stock, String ticker_symbol, String company_name, BigDecimal base_price) {
-        this.stock = stock;
-        this.ticker_symbol = ticker_symbol;
-        this.company_name = company_name;
-        this.base_price = base_price;
+    public Stock(String ticker, String company, double cost) {
+
+        this.ticker = ticker;
+        this.company = company;
+        this.cost = cost;
     }
 
-    /*
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Stock stock = (Stock) o;
+        return stockId == stock.stockId && Double.compare(cost, stock.cost) == 0 && Objects.equals(ticker, stock.ticker) && Objects.equals(company, stock.company);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(stockId, ticker, company, cost);
+    }
+
+  /*
     Basic Get-Sets
      */
 
-    public Integer getStock() {
-        return stock;
+    public int getStockId() {
+        return stockId;
     }
 
-    public void setStock(Integer stock) {
-        this.stock = stock;
+    public void setStockId(int stockId) {
+        this.stockId = stockId;
     }
 
-    public String getTicker_symbol() {
-        return ticker_symbol;
+    public String getTicker() {
+        return ticker;
     }
 
-    public void setTicker_symbol(String ticker_symbol) {
-        this.ticker_symbol = ticker_symbol;
+    public void setTicker(String ticker) {
+        this.ticker = ticker;
     }
 
-    public String getCompany_name() {
-        return company_name;
+    public String getCompany() {
+        return company;
     }
 
-    public void setCompany_name(String company_name) {
-        this.company_name = company_name;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
-    public BigDecimal getBase_price() {
-        return base_price;
+    public double getCost() {
+        return cost;
     }
 
-    public void setBase_price(BigDecimal base_price) {
-        this.base_price = base_price;
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 }

@@ -32,13 +32,12 @@
         app:layout_constraintTop_toBottomOf="@+id/buyLabel" />
 
     <EditText
-        android:id="@+id/searchCompanyName"
+        android:id="@+id/tickerInputEditText"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:autofillHints="none"
-        android:hint="@string/search_company_name"
+        android:hint="@string/enter_ticker_e_g_aapl"
         android:inputType="text"
         android:padding="10dp"
         android:textSize="26sp"
@@ -58,10 +57,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.151"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchCompanyName" />
+        app:layout_constraintTop_toBottomOf="@+id/tickerInputEditText" />
 
     <EditText
-        android:id="@+id/enterQuantity"
+        android:id="@+id/quantityInputEditText"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -87,20 +86,21 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterQuantity" />
+        app:layout_constraintTop_toBottomOf="@+id/quantityInputEditText" />
 
     <TextView
         android:id="@+id/availableCashBalance_placeholder"
-        android:layout_width="320dp"
-        android:layout_height="54dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:ems="16"
+        android:layout_marginTop="8dp"
+        android:autofillHints="none"
         android:hint="@string/dollar_sign"
         android:padding="10dp"
         android:text="@string/_0_00"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.129"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/availableCashBalance" />
 
@@ -119,18 +119,18 @@
         app:layout_constraintTop_toBottomOf="@+id/availableCashBalance_placeholder" />
 
     <TextView
-    android:id="@+id/cost_placeholder"
-        android:layout_width="320dp"
-        android:layout_height="54dp"
+        android:id="@+id/cost_placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:ems="16"
-        android:hint="@string/dollar_sign"
+        android:layout_marginTop="8dp"
         android:autofillHints="none"
+        android:hint="@string/dollar_sign"
         android:padding="10dp"
-        android:text="@string/_0_00"
+        android:text="@string/total_0_00"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.129"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cost" />
 

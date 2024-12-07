@@ -17,4 +17,8 @@
     <string name="enter_quantity">Enter Quantity</string>
     <string name="dollar_sign">$</string>
     <string name="_0_00">$0.00</string>
+    <string name="go_to_buy_activity">Go to Buy Activity</string>
+    <string name="total_0_00">Total: $0.00</string>
+    <string name="enter_company_ticker">enter company ticker</string>
+    <string name="enter_ticker_e_g_aapl">Enter ticker (e.g., AAPL)</string>
 </resources>
