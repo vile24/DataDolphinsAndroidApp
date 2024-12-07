@@ -6,71 +6,87 @@
     android:layout_height="match_parent">
 
     <TextView
+        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/newUserTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="150"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/app_name"
         android:textSize="50sp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.90" />
 
     <EditText
         android:id="@+id/newUserUserName"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:autofillHints="Username"
         android:gravity="center"
-        android:hint="@string/username"
+        android:hint="@string/new_username"
         android:inputType="text"
-        android:textSize="50sp"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newUserTitle"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintWidth_percent="0.90" />
 
     <EditText
         android:id="@+id/newUserPassword1"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:autofillHints=""
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:autofillHints="New Password"
         android:gravity="center"
-        android:hint="@string/password"
+        android:hint="@string/new_password"
         android:inputType="textPassword"
-        android:textSize="50sp"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newUserUserName"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintWidth_percent="0.90" />
 
 
     <EditText
         android:id="@+id/newUserPassword2"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:autofillHints=""
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:autofillHints="Verify Password"
         android:gravity="center"
-        android:hint="@string/password"
+        android:hint="@string/verify_password"
         android:inputType="textPassword"
-        android:textSize="50sp"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newUserPassword1"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintWidth_percent="0.90" />
 
     <Button
         android:id="@+id/newUserDone"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="@string/done"
-        android:textSize="50sp"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newUserPassword2"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintWidth_percent="0.70" />
 
     <Button
         android:id="@+id/newUserBack"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="@string/back"
-        android:textSize="50sp"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newUserDone"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintWidth_percent="0.70" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
