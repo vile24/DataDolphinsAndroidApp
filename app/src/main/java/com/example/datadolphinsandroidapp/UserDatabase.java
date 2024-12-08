@@ -9,7 +9,6 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.room.Room;
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -19,17 +18,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {Stock.class, User.class, Transaction.class},version = 1, exportSchema = false)
-public abstract class UsersDatabase extends RoomDatabase{
+public abstract class UserDatabase extends RoomDatabase{
 
     public static final String USER_TABLE = "userTable";
-    private static final String STOCK_PORTFOLIO = "UsersDatabase";
-    private static volatile UsersDatabase INSTANCE;
-    private static final String TAG = "UsersDatabase";
+    private static final String STOCK_PORTFOLIO = "UserDatabase";
+    private static volatile UserDatabase INSTANCE;
+    private static final String TAG = "UserDatabase";
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public abstract UserDAO userDAO();
-
 
     private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback(){
         @Override
@@ -41,6 +39,7 @@ public abstract class UsersDatabase extends RoomDatabase{
                 dao.deleteAll();
                 User admin1 = new User("a1","a1");
                 admin1.setIs_admin(true);
+                admin1.setCash_balance(999999999.99);
                 dao.insert(admin1);
                 User test1 = new User("t1","t1");
                 dao.insert(test1);
@@ -48,4 +47,15 @@ public abstract class UsersDatabase extends RoomDatabase{
         }
     };
 
+    static UserDatabase getDatabase(final Context context) {
+        if (INSTANCE == null) {
+            synchronized (UserDatabase.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                                    UserDatabase.class, "user_database").build();
+                }
+            }
+        }
+        return INSTANCE;
+    }
 }

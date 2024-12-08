@@ -4,10 +4,9 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.ColumnInfo;
 
-import com.example.datadolphinsandroidapp.UsersDatabase;
-import com.example.datadolphinsandroidapp.UsersDatabase_Impl;
+import com.example.datadolphinsandroidapp.UserDatabase;
 
-@Entity(tableName = UsersDatabase.USER_TABLE)
+@Entity(tableName = UserDatabase.USER_TABLE)
 public class User {
     @PrimaryKey
     @NonNull
@@ -19,7 +18,7 @@ public class User {
     @ColumnInfo(name = "is_admin")
     private Boolean is_admin = false;
     @ColumnInfo(name = "cash_balance")
-    private double cash_balance = 0.00;
+    private double cash_balance = 100.00;
 
     /*
     Standard user constructor

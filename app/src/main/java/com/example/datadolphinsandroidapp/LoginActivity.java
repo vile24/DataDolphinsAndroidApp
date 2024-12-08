@@ -6,9 +6,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+
+import com.example.datadolphinsandroidapp.database.entities.User;
 
 public class LoginActivity extends AppCompatActivity {
-
+    private UserRepository repository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
         Button newUserButton = findViewById(R.id.loginNewUser);
         loginButton.setOnClickListener(v -> logIn());
         newUserButton.setOnClickListener(v -> newUser());
+        repository = UserRepository.getRepository(getApplication());
     }
     private void newUser() {
         Intent newUser = new Intent(LoginActivity.this, NewUserActivity.class);
@@ -25,7 +29,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void logIn() {
-        if(PasswordCheck()){
+        EditText userNameIn =  findViewById(R.id.loginUsername);
+        EditText passwordIn= (findViewById(R.id.loginPassword));
+        String username = userNameIn.getText().toString();
+        String pass = passwordIn.getText().toString();
+
+        if(username.isEmpty() || pass.isEmpty()) {
+            Toast.makeText(this, "empty filed", Toast.LENGTH_SHORT).show();
+        }
+        else if(PasswordCheck(username,pass)){
             Toast.makeText(this, "LOG IN GOOD", Toast.LENGTH_SHORT).show();
         }
         else{
@@ -34,10 +46,13 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private boolean PasswordCheck(){
-        EditText username = findViewById(R.id.loginUsername);
-        EditText pass = findViewById(R.id.loginPassword);
-        if (username.getText().toString().equals(pass.getText().toString())){
+    private boolean PasswordCheck(String username, String pass){
+
+        LiveData<User> userObserver = repository.getUserByUserName(username);
+        User thisUser = repository.getUserByUserName(username).getValue();
+
+        assert thisUser != null;
+        if (thisUser.getPassword().equals(pass)){
             return true;
         }
         return false;
