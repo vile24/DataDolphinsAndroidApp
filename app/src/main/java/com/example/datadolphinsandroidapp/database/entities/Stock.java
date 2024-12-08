@@ -1,15 +1,24 @@
 package com.example.datadolphinsandroidapp.database.entities;
-import java.math.BigDecimal;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.ColumnInfo;
+@Entity
 public class Stock {
-    private Integer stock;
-    private String ticker_symbol;
-    private String company_name;
-    private BigDecimal base_price;
 
+    @PrimaryKey
+    @NonNull
+    private Integer stock;
+    @ColumnInfo(name = "company_name")
+    private String company_name;
+    @ColumnInfo(name = "ticker_symbol")
+    private String ticker_symbol;
+    @ColumnInfo(name = "base_price")
+    private double  base_price;
     /*
     Stock constructor
      */
-    public Stock(Integer stock, String ticker_symbol, String company_name, BigDecimal base_price) {
+    public Stock(String company_name,Integer stock, String ticker_symbol, double base_price) {
         this.stock = stock;
         this.ticker_symbol = ticker_symbol;
         this.company_name = company_name;
@@ -44,11 +53,11 @@ public class Stock {
         this.company_name = company_name;
     }
 
-    public BigDecimal getBase_price() {
+    public double getBase_price() {
         return base_price;
     }
 
-    public void setBase_price(BigDecimal base_price) {
+    public void setBase_price(double base_price) {
         this.base_price = base_price;
     }
 }

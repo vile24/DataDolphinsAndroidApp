@@ -1,18 +1,31 @@
 package com.example.datadolphinsandroidapp.database.entities;
 import java.math.BigDecimal;
+
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.ColumnInfo;
+@Entity
 public class Transaction {
 
-    private Integer transaction;
-    private int user_id;
+    @PrimaryKey
+    @NonNull
     private Integer stock;
+    @ColumnInfo(name = "transaction")
+    private Integer transaction;
+    @ColumnInfo(name = "user_id")
+    private int user_id;
+    @ColumnInfo(name = "quantity")
     private Integer quantity;
-    private BigDecimal purchase_price;
-    private BigDecimal sell_price = BigDecimal.valueOf(-1); // Might want this for stock history
+    @ColumnInfo(name = "purchase_price")
+    private double purchase_price;
+    @ColumnInfo(name = "sell_price")
+    private double sell_price; // Might want this for stock history
 
     /*
     Transaction constructor
      */
-    public Transaction(Integer transaction, int user_id, Integer stock, Integer quantity, BigDecimal purchase_price) {
+    public Transaction(Integer transaction, int user_id, Integer stock, Integer quantity, double purchase_price) {
         this.transaction = transaction;
         this.user_id = user_id;
         this.stock = stock;
@@ -52,19 +65,19 @@ public class Transaction {
         this.quantity = quantity;
     }
 
-    public BigDecimal getPurchase_price() {
+    public double getPurchase_price() {
         return purchase_price;
     }
 
-    public void setPurchase_price(BigDecimal purchase_price) {
+    public void setPurchase_price(double purchase_price) {
         this.purchase_price = purchase_price;
     }
 
-    public BigDecimal getSell_price() {
+    public double getSell_price() {
         return sell_price;
     }
 
-    public void setSell_price(BigDecimal sell_price) {
+    public void setSell_price(double sell_price) {
         this.sell_price = sell_price;
     }
 }
