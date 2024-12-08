@@ -1,16 +1,30 @@
 package com.example.datadolphinsandroidapp.database.entities;
-import java.math.BigDecimal;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.ColumnInfo;
+
+import com.example.datadolphinsandroidapp.UsersDatabase;
+import com.example.datadolphinsandroidapp.UsersDatabase_Impl;
+
+@Entity(tableName = UsersDatabase.USER_TABLE)
 public class User {
+    @PrimaryKey
+    @NonNull
     private String user_name;
+    @ColumnInfo(name = "email")
     private String email;
+    @ColumnInfo(name = "password")
     private String password;
+    @ColumnInfo(name = "is_admin")
     private Boolean is_admin = false;
-    private BigDecimal cash_balance= BigDecimal.valueOf(0.00);
+    @ColumnInfo(name = "cash_balance")
+    private double cash_balance = 0.00;
 
     /*
     Standard user constructor
      */
-    public User(String user_name, String password) {
+    public User(@NonNull String user_name, String password) {
         this.user_name = user_name;
         this.password = password;
     }
@@ -27,11 +41,12 @@ public class User {
     /*
     Basic Get-Sets
      */
+    @NonNull
     public String getUser_name() {
         return user_name;
     }
 
-    public void setUser_name(String user_name) {
+    public void setUser_name(@NonNull String user_name) {
         this.user_name = user_name;
     }
 
@@ -59,11 +74,11 @@ public class User {
         this.is_admin = is_admin;
     }
 
-    public BigDecimal getCash_balance() {
+    public double getCash_balance() {
         return cash_balance;
     }
 
-    public void setCash_balance(BigDecimal cash_balance) {
+    public void setCash_balance(double cash_balance) {
         this.cash_balance = cash_balance;
     }
 }
