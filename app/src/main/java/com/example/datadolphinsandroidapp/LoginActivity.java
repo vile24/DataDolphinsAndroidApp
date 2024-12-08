@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import android.util.Log;
 
 import com.example.datadolphinsandroidapp.database.entities.User;
 
@@ -36,25 +37,35 @@ public class LoginActivity extends AppCompatActivity {
 
         if(username.isEmpty() || pass.isEmpty()) {
             Toast.makeText(this, "empty filed", Toast.LENGTH_SHORT).show();
+            return;
         }
-        else if(PasswordCheck(username,pass)){
-            Toast.makeText(this, "LOG IN GOOD", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            // Login failed Msg
-            Toast.makeText(this, "LOG IN FAILED", Toast.LENGTH_SHORT).show();
-        }
+        PasswordCheck(username,pass,isValid ->{
+            if (isValid){
+                    Toast.makeText(LoginActivity.this, "LOG IN GOOD", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, "LOG IN FAILED", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private boolean PasswordCheck(String username, String pass){
+    private void PasswordCheck(String username, String pass, PasswordCheckCallback callback){
 
         LiveData<User> userObserver = repository.getUserByUserName(username);
-        User thisUser = repository.getUserByUserName(username).getValue();
+        userObserver.observe(this, user -> {
 
-        assert thisUser != null;
-        if (thisUser.getPassword().equals(pass)){
-            return true;
-        }
-        return false;
+            if (user != null) {
+                if (pass.equals(user.getPassword())) {
+                    callback.onResult(true);
+                } else {
+                    callback.onResult(false);
+                }
+            }else{
+                Toast.makeText(this, "User "+ username + " not found", Toast.LENGTH_SHORT).show();
+                callback.onResult(false);
+            }
+        });
+    }
+    public interface PasswordCheckCallback {
+        void onResult(boolean isValid);
     }
 }

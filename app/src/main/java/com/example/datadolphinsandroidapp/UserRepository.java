@@ -25,7 +25,7 @@ public class UserRepository {
     private UserRepository(Application application) {
         UserDatabase db = UserDatabase.getDatabase(application);
         this.userDAO = db.userDAO();
-        // this.UserLog = (ArrayList<User>) this.UserDAO.getAllRecords();
+        LiveData<List<User>> allLogs = userDAO.getAllUsers();
     }
 
     public static UserRepository getRepository(Application application){
@@ -34,7 +34,6 @@ public class UserRepository {
         }
         return repository;
     }
-
 
     public  void insertUser(User... users){
         UserDatabase.databaseWriteExecutor.execute(() ->{
