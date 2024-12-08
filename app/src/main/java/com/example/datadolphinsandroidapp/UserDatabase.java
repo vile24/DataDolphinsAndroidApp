@@ -1,6 +1,8 @@
 package com.example.datadolphinsandroidapp;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import com.example.datadolphinsandroidapp.database.entities.Stock;
 import com.example.datadolphinsandroidapp.database.entities.Transaction;

@@ -33,7 +33,9 @@ public class NewUserActivity extends AppCompatActivity {
         }
     }
     private void makeNewUser() {
-        User newUser = new User((findViewById(R.id.newUserUserName).toString()),(findViewById(R.id.newUserPassword1).toString()));
+        EditText userNameInput = (EditText) findViewById(R.id.newUserUserName);
+        EditText password = (EditText) findViewById(R.id.newUserPassword1);
+        User newUser = new User(userNameInput.getText().toString(), password.getText().toString());
         repository.insertUser(newUser);
     }
     private boolean testPasswordMatch() {

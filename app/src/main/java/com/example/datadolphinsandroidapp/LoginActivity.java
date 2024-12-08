@@ -7,7 +7,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
-import android.util.Log;
 
 import com.example.datadolphinsandroidapp.database.entities.User;
 
@@ -25,8 +24,8 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void newUser() {
         Intent newUser = new Intent(LoginActivity.this, NewUserActivity.class);
-        startActivity(newUser);
         Toast.makeText(this, "New User", Toast.LENGTH_SHORT).show();
+        startActivity(newUser);
     }
 
     private void logIn() {
@@ -36,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         String pass = passwordIn.getText().toString();
 
         if(username.isEmpty() || pass.isEmpty()) {
-            Toast.makeText(this, "empty filed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Empty field", Toast.LENGTH_SHORT).show();
             return;
         }
         PasswordCheck(username,pass,isValid ->{
@@ -63,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "User "+ username + " not found", Toast.LENGTH_SHORT).show();
                 callback.onResult(false);
             }
+            userObserver.removeObservers(this);
         });
     }
     public interface PasswordCheckCallback {
