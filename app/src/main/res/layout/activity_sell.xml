@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
-        android:text="Available Shares"
+        android:text="@string/available_shares"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +70,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:autofillHints="none"
-        android:hint="Current Shares"
+        android:hint="@string/current_shares"
         android:inputType="number"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,13 +87,14 @@
         android:layout_marginTop="12dp"
         android:autofillHints="none"
         android:ems="16"
-        android:hint="@string/enter_quantity"
+        android:hint="Enter Sell Quantity"
         android:inputType="number"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sellQuantity" />
+        app:layout_constraintTop_toBottomOf="@+id/sellQuantity"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/sellQuantity"
@@ -125,7 +126,7 @@
         tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/costPlaceholder"
+        android:id="@+id/sellCostPlaceHolder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -142,14 +143,14 @@
         android:id="@+id/buyButton"
         android:layout_width="390dp"
         android:layout_height="100dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="28dp"
         android:text="Sell"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/costPlaceholder"
+        app:layout_constraintTop_toBottomOf="@+id/sellCostPlaceHolder"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
