@@ -19,7 +19,7 @@ import androidx.room.Query;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Stock.class, User.class, Transaction.class},version = 1, exportSchema = false)
+@Database(entities = {Stock.class, User.class, Transaction.class},version = 2, exportSchema = false)
 public abstract class UserDatabase extends RoomDatabase{
 
     public static final String USER_TABLE = "userTable";
@@ -54,10 +54,13 @@ public abstract class UserDatabase extends RoomDatabase{
             synchronized (UserDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    UserDatabase.class, "user_database").build();
+                                    UserDatabase.class, "user_database").addCallback(addDefaultValues).build();
                 }
             }
         }
         return INSTANCE;
     }
+
+    //private static class Callback extends RoomDatabase.Callback {
+    //}
 }
