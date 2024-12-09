@@ -1,5 +1,4 @@
 package com.example.datadolphinsandroidapp;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -7,7 +6,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
-
 import com.example.datadolphinsandroidapp.database.entities.User;
 
 public class LoginActivity extends AppCompatActivity {
@@ -16,12 +14,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        repository = UserRepository.getRepository(getApplication());
         Button loginButton = findViewById(R.id.loginLogInButton);
         Button newUserButton = findViewById(R.id.loginNewUser);
         loginButton.setOnClickListener(v -> logIn());
         newUserButton.setOnClickListener(v -> newUser());
-        repository = UserRepository.getRepository(getApplication());
     }
+
     private void newUser() {
         Intent newUser = new Intent(LoginActivity.this, NewUserActivity.class);
         Toast.makeText(this, "New User", Toast.LENGTH_SHORT).show();
@@ -38,16 +37,17 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Empty field", Toast.LENGTH_SHORT).show();
             return;
         }
-        PasswordCheck(username,pass,isValid ->{
+        passwordCheck(username,pass, isValid ->{
             if (isValid){
                     Toast.makeText(LoginActivity.this, "LOG IN GOOD", Toast.LENGTH_SHORT).show();
+
             }else{
                 Toast.makeText(this, "LOG IN FAILED", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void PasswordCheck(String username, String pass, PasswordCheckCallback callback){
+    private void passwordCheck(String username, String pass, PasswordCheckCallback callback){
 
         LiveData<User> userObserver = repository.getUserByUserName(username);
         userObserver.observe(this, user -> {
@@ -55,6 +55,11 @@ public class LoginActivity extends AppCompatActivity {
             if (user != null) {
                 if (pass.equals(user.getPassword())) {
                     callback.onResult(true);
+
+                    Intent intent = UserPortfolioActivity.openPortfolio(getApplicationContext(),user.getUser_name());
+                    startActivity(intent);
+
+                    // loginActivity(repository.getUserByUserName(username));
                 } else {
                     callback.onResult(false);
                 }
@@ -65,6 +70,15 @@ public class LoginActivity extends AppCompatActivity {
             userObserver.removeObservers(this);
         });
     }
+
+//    Static Intent loginIntentFactory(Context context){
+//        return new Intent(context, LoginActivity.class);
+//    }
+
+
+
+
+
     public interface PasswordCheckCallback {
         void onResult(boolean isValid);
     }

@@ -1,19 +1,11 @@
 package com.example.datadolphinsandroidapp;
-
 import android.app.Application;
-import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 
-import com.example.datadolphinsandroidapp.LoginActivity;
-import com.example.datadolphinsandroidapp.NewUserActivity;
-import com.example.datadolphinsandroidapp.MainActivity;
 import com.example.datadolphinsandroidapp.database.entities.User;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-
 
 public class UserRepository {
     private final UserDAO userDAO;

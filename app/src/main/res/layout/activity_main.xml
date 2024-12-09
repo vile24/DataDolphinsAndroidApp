@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".UserPortfolioActivity">
 
     <TextView
         android:id="@+id/portfolioTitle"
@@ -18,7 +18,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.90" />
+        app:layout_constraintWidth_percent="0.90"
+        android:layout_width="0dp"/>
 
     <TextView
 
@@ -31,7 +32,6 @@
         android:text="@string/portfolio_placeholder"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/portfolioTitle"
         app:layout_constraintWidth_percent="0.70" />
