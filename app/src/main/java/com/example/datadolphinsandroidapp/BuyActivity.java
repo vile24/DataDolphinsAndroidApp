@@ -9,26 +9,37 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.datadolphinsandroidapp.database.StockRepository;
+import com.example.datadolphinsandroidapp.database.entities.Stock;
+import com.example.datadolphinsandroidapp.database.entities.Transaction;
 import com.example.datadolphinsandroidapp.databinding.ActivityBuyBinding;
 
 import java.util.Locale;
 
-public class BuyActivity extends AppCompatActivity {
+public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
 
+    // Key to get the ticker
     public static final String EXTRA_TICKER = "com.example.datadolphinsandroidapp.EXTRA_TICKER";
     private ActivityBuyBinding binding;
     private StockRepository repository;
 
     public static final String TAG = "DAC_STOCK";
 
+    // Instance variable
     String ticker = "";
     int quantity = 0;
 
+    // This is dummy data for test user. Need to get userID from Extra_User
+    int userId = 999;
+    Stock stock;
     double totalCost = 0.0;   // cost * qty
-    double balance = 1000;
+
+    // This is dummy data for test user.
+    double balance = 100000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +50,31 @@ public class BuyActivity extends AppCompatActivity {
         // Get the ticker passed from MainActivity
         Intent intent = getIntent();
         initBalanceDisplay();
+        // Key to get pass
         ticker = intent.getStringExtra(EXTRA_TICKER);
         if (ticker != null) {
-            Log.d(TAG, "Ticker received: " + ticker);
+            Log.d(TAG, "Ticker received: " + ticker);  // debug log
             // You can now use `ticker` to perform database queries or update UI
             binding.stock.setText(ticker); // Example: prepopulate stock field
         }
 
         getInformationFromDisplay();
-//        updateDisplay();
+       // updateDisplay();
 
+        // set repository
         repository = StockRepository.getRepository(getApplication());
+
+        // Trigger database initialization. run a query so it is created immediately
+        repository.getAllStocks().observe(this, stocks -> {
+            if (stocks != null && !stocks.isEmpty()) {
+                Log.d(TAG, "Stocks retrieved from database: " + stocks.size());
+                for (Stock stock : stocks) {
+                    Log.d(TAG, "Stock: " + stock.getTicker() + ", " + stock.getCompany() + ", " + stock.getCost());
+                }
+            } else {
+                Log.d(TAG, "No stocks found in database.");
+            }
+        });
 
         // Display est. totalCost after user input ticker & qty
         binding.quantityInputEditText.addTextChangedListener(new TextWatcher() {
@@ -78,6 +103,7 @@ public class BuyActivity extends AppCompatActivity {
                     Toast.makeText(BuyActivity.this, "Buy Successful!", Toast.LENGTH_LONG).show();
                     balance = balance - totalCost;
                     initBalanceDisplay();
+                    insertBuyStock();
                 }
             }
         });
@@ -86,7 +112,7 @@ public class BuyActivity extends AppCompatActivity {
 
     private void verifyTicker() {
         // Get ticker input from activity_buy.xml
-        String ticker = binding.tickerInputEditText.getText().toString().trim();
+        ticker = binding.tickerInputEditText.getText().toString().trim();
 
         // Validate ticker input
         if (ticker.isEmpty()) {
@@ -105,8 +131,8 @@ public class BuyActivity extends AppCompatActivity {
         // Query the database for the ticker
         repository.getStockByTicker(ticker).observe(this, stock -> {
             if (stock != null) {
-                double cost = stock.getCost();
-                totalCost = cost * quantity;
+                this.stock = stock;
+                totalCost = stock.getCost() * quantity;
 
                 // Update the cost placeholder with the calculated total
                 binding.costPlaceholder.setText(String.format(Locale.US, "$%.2f", totalCost));
@@ -120,13 +146,9 @@ public class BuyActivity extends AppCompatActivity {
         });
     }
 
-    // this is just for testing, putting stock in the cost placeholder.
-//    public void updateDisplay() {
-//        String currentInfo = binding.companyTickerEditText.getText().toString();
-//        Log.d(TAG,"Current info: "+currentInfo);
-//        String newDisplay = String.format(Locale.US, "%s", mTicker);
-//        binding.costPlaceholder.setText(newDisplay);
-//    }
+    private void insertBuyStock() {
+        repository.insertTransactions(new Transaction(userId, stock.getStockId(), quantity, stock.getCost(), 0));
+    }
 
     private void getInformationFromDisplay() {
         // Grab user "company ticker" input and store in mTicker
