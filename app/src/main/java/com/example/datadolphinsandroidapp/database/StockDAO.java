@@ -33,6 +33,8 @@ public interface StockDAO {
     @Query("SELECT * FROM " + StockPortfolioDatabase.STOCK_TABLE + " WHERE stockId == :stockId")
     LiveData<List<Stock>> getRecordersetStockIdLiveData(int stockId);
 
+    @Query("SELECT * FROM " + StockPortfolioDatabase.STOCK_TABLE + " WHERE stockId == :stockId")
+    LiveData<Stock> getStockByStockId(int stockId);
 }
 
 
