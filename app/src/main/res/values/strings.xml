@@ -1,9 +1,29 @@
 <resources>
     <string name="app_name">Data Dolphins App</string>
-    <string name="username">Username</string>
+    <string name="username">username</string>
     <string name="password">Password</string>
     <string name="log_in">Log In</string>
-    <string name="new_user">New User</string>
     <string name="done">Done</string>
     <string name="back">Back</string>
+    <string name="sell">Sell</string>
+    <string name="stock">Stock</string>
+    <string name="quantity">Quantity</string>
+    <string name="buy">Buy</string>
+    <string name="available_cash_balance">Available Cash Balance</string>
+    <string name="cost">Cost</string>
+    <string name="company_name">Company Name</string>
+    <string name="search_company_name">Search Company Name</string>
+    <string name="enter_quantity">Enter Quantity</string>
+    <string name="dollar_sign">$</string>
+    <string name="_0_00">$0.00</string>
+    <string name="go_to_buy_activity">Go to Buy Activity</string>
+    <string name="total_0_00">Total: $0.00</string>
+    <string name="enter_company_ticker">enter company ticker</string>
+    <string name="enter_ticker_e_g_aapl">Enter ticker (e.g., AAPL)</string>
+    <string name="user_s_portfolio"><![CDATA[<User>\'s Portfolio]]></string>
+    <string name="portfolio_placeholder">Current Balance:&#xA;$000&#xA;Portfolio Value:&#xA;$000&#xA;Total Balance:&#xA;$000 </string>
+    <string name="verify_password">Verify Password</string>
+    <string name="new_password">New password</string>
+    <string name="new_username">New username</string>
+    <string name="new_user">New user</string>
 </resources>

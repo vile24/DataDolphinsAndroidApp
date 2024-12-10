@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.example.datadolphinsandroidapp.database.entities.Stock;
+import com.example.datadolphinsandroidapp.database.entities.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,11 @@ public class StockRepository {
 
     // Data Access Object (DAO) for interacting with the database.
     private final StockDAO stockDAO;
+    private final TransactionDAO transactionDAO;
 
     // List to store all stocks retrieved from the database.
     private ArrayList<Stock> allStocks;
+    private ArrayList<Transaction> allTransactions;
 
     // A single instance of the repository to ensure only one is created.
     private static StockRepository repository;
@@ -31,7 +34,8 @@ public class StockRepository {
     private StockRepository(Application application) {
         StockPortfolioDatabase db = StockPortfolioDatabase.getDatabase(application);
         stockDAO = db.stockDAO(); // Gets the DAO from the database.
-        allStocks = (ArrayList<Stock>) stockDAO.getAllRecords(); // Retrieves all records.
+
+        transactionDAO = db.transactionDAO(); // Gets the DAO from the database.
     }
 
     // Method to get the single instance of the repository.
@@ -52,12 +56,6 @@ public class StockRepository {
         }
     }
 
-    // Inserts a single stock into the database using a background thread.
-    public void insertStock(Stock stock) {
-        StockPortfolioDatabase.databaseWriteExecutor.execute(() -> {
-            stockDAO.insert(stock); // Calls the DAO to insert the stock.
-        });
-    }
 
     // Inserts one or multiple stocks into the database.
     // The "Stock...stock" parameter allows passing multiple Stock objects (varargs).
@@ -66,6 +64,13 @@ public class StockRepository {
         // Runs the insertion in a background thread to avoid slowing down the app.
         StockPortfolioDatabase.databaseWriteExecutor.execute(() -> {
             stockDAO.insert(stock); // Calls the DAO to insert the stocks.
+        });
+    }
+
+    // Insert multiple transactions into the database
+    public void insertTransactions(Transaction... transactions) {
+        StockPortfolioDatabase.databaseWriteExecutor.execute(() -> {
+            transactionDAO.insert(transactions);
         });
     }
 
@@ -81,7 +86,17 @@ public class StockRepository {
     }
 
     // Retrieves a list of all stocks in the database.
-    public List<Stock> getAllStocks() {
-        return stockDAO.getAllRecords(); // DAO retrieves all stock records.
+    public LiveData<List<Stock>> getAllStocks() {
+        return stockDAO.getAllStocks();  // DAO retrieves all stock records.
+    }
+
+    // Retrieve all transactions
+    public LiveData<List<Transaction>> getAllTransactions() {
+        return transactionDAO.getAllTransactions();
+    }
+
+    // Retrieve transactions by user ID
+    public LiveData<List<Transaction>> getTransactionsByUserId(int userId) {
+        return transactionDAO.getTransactionsByUserId(userId);
     }
 }

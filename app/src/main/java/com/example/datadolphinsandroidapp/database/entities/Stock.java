@@ -1,9 +1,4 @@
 package com.example.datadolphinsandroidapp.database.entities;
-import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-import androidx.room.ColumnInfo;
-@Entity
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
