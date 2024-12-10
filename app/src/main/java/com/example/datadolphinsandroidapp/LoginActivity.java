@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (pass.equals(user.getPassword())) {
                     callback.onResult(true);
 
-                    Intent intent = UserPortfolioActivity.openPortfolio(getApplicationContext(),user.getUser_name());
+                    Intent intent = MainActivity.openMain(getApplicationContext(),user.getUser_name());
                     startActivity(intent);
 
                     // loginActivity(repository.getUserByUserName(username));
