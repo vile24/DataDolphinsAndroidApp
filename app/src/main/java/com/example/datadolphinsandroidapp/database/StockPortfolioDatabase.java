@@ -11,18 +11,21 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.datadolphinsandroidapp.BuyActivity;
 import com.example.datadolphinsandroidapp.database.entities.Stock;
+import com.example.datadolphinsandroidapp.database.entities.Transaction;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 // This is the database class for the app.
 // When adding a new table, make sure to increase the version number.
-@Database(entities = {Stock.class}, version = 1, exportSchema = false)
+@Database(entities = {Stock.class, Transaction.class}, version = 4, exportSchema = false)
 public abstract class StockPortfolioDatabase extends RoomDatabase {
 
     // Name of the database file.
     private static final String DATABASE_NAME = "stockPortfolioDatabase";
     public static final String STOCK_TABLE = "stockTable";
+    public static final String TRANSACTION_TABLE = "transactionTable";
 
     // This ensures only one instance of the database is created in memory (RAM).
     // Having multiple instances could cause errors if two parts of the app try to access
@@ -39,6 +42,8 @@ public abstract class StockPortfolioDatabase extends RoomDatabase {
     // Abstract method to get access to the StockDAO for database operations.
     public abstract StockDAO stockDAO();
 
+    public abstract TransactionDAO transactionDAO();
+
     // This method provides the database instance. If it doesn't exist, it creates one.
     static StockPortfolioDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
@@ -50,7 +55,7 @@ public abstract class StockPortfolioDatabase extends RoomDatabase {
                             // If there are changes to the database structure, this will reset it to avoid errors.
                             .fallbackToDestructiveMigration()
                             // Adds default data to the database when it is created for the first time.
-                            .addCallback(getAddDefaultValuesCallback())
+                            .addCallback(getAddDefaultValuesCallback(context))
                             .build();
                 }
             }
@@ -59,34 +64,33 @@ public abstract class StockPortfolioDatabase extends RoomDatabase {
     }
 
     // This callback is triggered when the database is created for the first time.
-    private static RoomDatabase.Callback getAddDefaultValuesCallback() {
+    private static RoomDatabase.Callback getAddDefaultValuesCallback(Context context) {
         return new RoomDatabase.Callback() {
+
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
+                Log.d(BuyActivity.TAG, "Database created: onCreate callback triggered.");
 
-                Log.i(BuyActivity.TAG, "DATABASE CREATED!");
-
-                // Uses a background thread to add default data to the database.
                 databaseWriteExecutor.execute(() -> {
+                    StockDAO dao = INSTANCE.stockDAO();
+                    dao.deleteAll(); // Clear existing data
 
-                    StockDAO dao = INSTANCE.stockDAO(); // Gets the DAO to interact with the database.
-                    dao.deleteAll(); // Clears any existing data in the database.
-                    INSTANCE.stockDAO().deleteAll(); // Clear existing data
+                    StockImporter importer = new StockImporter();
+                    importer.addFromAssets(context, "nasdaq100.csv");
 
-                    // Adds some example data to the database for testing purposes.
-                    // TODO: read from csv - Juan ?
-                    Stock appleStock = new Stock("AAPL", "Apple", 200.0);
-                    Stock teslaStock = new Stock("TSLA", "Tesla", 300.00);
-                    dao.insert(appleStock, teslaStock);
 
-                    Log.i(BuyActivity.TAG, "Default stocks inserted.");
+                    ArrayList<Stock> stocks = importer.getStockList();
+                    for (Stock item : stocks) {
+                        Log.d(BuyActivity.TAG, "Inserting stock: " + item.getTicker());
+                        dao.insert(item);
+                    }
                 });
+                Log.i("StockPortfolioDatabase", "Default stocks inserted.");
             }
         };
     }
 }
-
 
 
 
