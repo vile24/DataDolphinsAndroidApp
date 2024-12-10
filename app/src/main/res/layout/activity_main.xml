@@ -5,48 +5,27 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserPortfolioActivity">
+    tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/portfolioTitle"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/user_s_portfolio"
-        android:textSize="50sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.90"
-        android:layout_width="0dp"/>
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Hello World!"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"w-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <TextView
-
-        android:id="@+id/portfolioText"
-        android:layout_width="370dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="5dp"
-        android:height="400dp"
-        android:gravity=""
-        android:text="@string/portfolio_placeholder"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/portfolioTitle"
-        app:layout_constraintWidth_percent="0.70" />
 
     <Button
-        android:id="@+id/portfolioBackButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/back"
-        android:layout_width="0dp"
-        android:textSize="50sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.50"
+        android:text="@string/go_to_buy_activity"
+        android:textSize="36sp"
+        android:layout_marginTop="36dp"
+        android:id="@+id/buyButton"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/portfolioText"
-        app:layout_constraintWidth_percent="0.70" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
