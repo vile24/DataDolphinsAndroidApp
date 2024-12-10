@@ -1,5 +1,7 @@
 package com.example.datadolphinsandroidapp;
 
+import static android.os.Build.USER;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,4 +44,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public static Intent openMain(Context context, String user){
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(USER, user);
+        //intent.getDataString();
+        return intent;
+    }
+
 }

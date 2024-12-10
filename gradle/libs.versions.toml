@@ -21,4 +21,5 @@ room-common = { group = "androidx.room", name = "room-common", version.ref = "ro
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 

@@ -1,30 +1,51 @@
 package com.example.datadolphinsandroidapp.database.entities;
-import java.math.BigDecimal;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.ColumnInfo;
+
+import com.example.datadolphinsandroidapp.UserDatabase;
+
+@Entity(tableName = UserDatabase.USER_TABLE)
 public class User {
+    @PrimaryKey
+    @NonNull
     private String user_name;
+    @ColumnInfo(name = "email")
     private String email;
+    @ColumnInfo(name = "password")
     private String password;
+    @ColumnInfo(name = "is_admin")
     private Boolean is_admin = false;
-    private BigDecimal cash_balance= BigDecimal.valueOf(0.00);
+    @ColumnInfo(name = "cash_balance")
+    private double cash_balance = 100.00;
 
     /*
     Standard user constructor
      */
-    public User(String user_name, String password) {
+    public User(@NonNull String user_name, String password) {
         this.user_name = user_name;
         this.password = password;
     }
 
-
+    public boolean newUser(String user_name, String password1,String password2){
+        //TODO check if user already exists
+        if (password1.equals(password2)){
+            User test = new User(user_name,password1);
+            return true;
+        }
+        return false;
+    }
 
     /*
     Basic Get-Sets
      */
+    @NonNull
     public String getUser_name() {
         return user_name;
     }
 
-    public void setUser_name(String user_name) {
+    public void setUser_name(@NonNull String user_name) {
         this.user_name = user_name;
     }
 
@@ -52,11 +73,11 @@ public class User {
         this.is_admin = is_admin;
     }
 
-    public BigDecimal getCash_balance() {
+    public double getCash_balance() {
         return cash_balance;
     }
 
-    public void setCash_balance(BigDecimal cash_balance) {
+    public void setCash_balance(double cash_balance) {
         this.cash_balance = cash_balance;
     }
 }
