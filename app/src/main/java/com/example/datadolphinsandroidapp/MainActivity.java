@@ -31,5 +31,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Set up a button to navigate to BuyActivity
+        binding.SellButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open SellActivity (no ticker passed from MainActivity)
+                Intent intent = SellActivity.sellIntentFactory(MainActivity.this);
+                startActivity(intent);
+            }
+        });
     }
 }

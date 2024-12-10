@@ -34,14 +34,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sellLabel" />
 
-    <EditText
+    <TextView
         android:id="@+id/sellTickerInputEditText"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:hint="@string/enter_ticker_e_g_aapl"
-        android:inputType="text"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,6 +78,21 @@
         app:layout_constraintTop_toBottomOf="@+id/availableShares"
         tools:ignore="HardcodedText,TextViewEdits" />
 
+
+    <TextView
+        android:id="@+id/sellQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/quantity"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.153"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/availableSharePlaceholder" />
+
     <EditText
         android:id="@+id/sellQuantityInputEditText"
         android:layout_width="320dp"
@@ -95,20 +109,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sellQuantity"
         tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/sellQuantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/quantity"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.153"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/availableSharePlaceholder" />
 
     <TextView
         android:id="@+id/estProceeds"
@@ -140,7 +140,7 @@
         app:layout_constraintTop_toBottomOf="@+id/estProceeds" />
 
     <Button
-        android:id="@+id/buyButton"
+        android:id="@+id/sellButton"
         android:layout_width="390dp"
         android:layout_height="100dp"
         android:layout_marginTop="28dp"
