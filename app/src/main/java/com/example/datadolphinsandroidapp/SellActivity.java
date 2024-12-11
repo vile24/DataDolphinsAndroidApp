@@ -38,11 +38,11 @@ public class SellActivity extends AppCompatActivity {
         // This retrieves the Intent object that started the current activity.
         // Intents are used to pass data between activities in Android.
         Intent intent = getIntent();
-        transaction = new Transaction(999, 6, 100, 500, 0);
+        transaction = new Transaction(999, "TSLA", 100, 500, 0);
         // set repository
         repository = StockRepository.getRepository(getApplication());
         // get the stock from stock_table using transaction stockId
-        repository.getStockByStockId(transaction.getStockId()).observe(this, stock -> {
+        repository.getStockByTicker(transaction.getTicker()).observe(this, stock -> {
             if (stock != null) {
                 this.stock = stock;
                 // set the ticker in the UI

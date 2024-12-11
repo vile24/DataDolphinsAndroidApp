@@ -30,11 +30,12 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
     public static final String TAG = "DAC_STOCK";
 
     // Instance variable
-    String ticker = "";
+    String ticker = "AAPL";
     int quantity = 0;
 
-    // This is dummy data for test user. Need to get userID from Extra_User
-    int userId = 999;
+    int userId;
+
+
     Stock stock;
     double totalCost = 0.0;   // cost * qty
 
@@ -147,7 +148,7 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
     }
 
     private void insertBuyStock() {
-        repository.insertTransactions(new Transaction(userId, stock.getStockId(), quantity, stock.getCost(), 0));
+        repository.insertTransactions(new Transaction(userId, stock.getTicker(), quantity, stock.getCost(), 0));
     }
 
     private void getInformationFromDisplay() {

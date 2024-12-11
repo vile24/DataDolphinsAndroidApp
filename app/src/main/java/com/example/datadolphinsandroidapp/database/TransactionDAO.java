@@ -26,11 +26,23 @@ public interface TransactionDAO {
     void deleteAll();
 
     // Retrieve a specific user's transactions by their userId
-    @Query("SELECT * FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " WHERE userId = :userId")
-    LiveData<List<Transaction>> getTransactionsByUserId(int userId);
+    @Query("SELECT * FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " WHERE ticker = :ticker")
+    LiveData<List<Transaction>> getTransactionsByTicker(String ticker);
 
     // Retrieve all transactions from the table
     @Query("SELECT * FROM " + StockPortfolioDatabase.TRANSACTION_TABLE)
     LiveData<List<Transaction>> getAllTransactions();
+
+    @Query("SELECT * FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " WHERE userId = :userId")
+    LiveData<List<Transaction>> getTransactionsByUserId(int userId);
+
+    // Query with no aliases, matches fields in StockWithQuantity
+    @Query("SELECT ticker, SUM(quantity) AS quantity FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " GROUP BY ticker")
+    LiveData<List<StockWithQuantity>> getStocksWithQuantities();
+
+    // For debug only
+    @Query("SELECT * FROM transactionTable")
+    List<Transaction> getAllTransactionsRaw();
+
 
 }

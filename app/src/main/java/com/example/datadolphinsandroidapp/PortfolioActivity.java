@@ -1,3 +1,5 @@
+/*This file manages the RecyclerView and data binding.*/
+
 package com.example.datadolphinsandroidapp;
 
 import android.content.Intent;
@@ -39,7 +41,7 @@ public class PortfolioActivity extends AppCompatActivity {
 
     private void navigateToSellActivity(StockWithQuantity stock) {
         Intent intent = new Intent(this, SellActivity.class);
-        intent.putExtra(SellActivity.EXTRA_TICKER, stock.getStockName());
+        intent.putExtra(SellActivity.EXTRA_TICKER, stock.getTicker());
         startActivity(intent);
     }
 }

@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 
 // This is the database class for the app.
 // When adding a new table, make sure to increase the version number.
-@Database(entities = {Stock.class, Transaction.class}, version = 4, exportSchema = false)
+@Database(entities = {Stock.class, Transaction.class}, version = 5, exportSchema = false)
 public abstract class StockPortfolioDatabase extends RoomDatabase {
 
     // Name of the database file.

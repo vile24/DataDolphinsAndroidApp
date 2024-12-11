@@ -49,11 +49,6 @@ public interface StockDAO {
 //            "ON s.stockId = t.stockId")
 //    LiveData<List<StockWithQuantity>> getStocksWithQuantities();
 
-    @Query("SELECT s.ticker AS stockName, SUM(t.quantity) AS stockQuantity " +
-            "FROM stockTable AS s " +
-            "LEFT JOIN transactionTable AS t ON s.stockId = t.stockId " +
-            "GROUP BY s.stockId")
-    LiveData<List<StockWithQuantity>> getStocksWithQuantities();
 }
 
 

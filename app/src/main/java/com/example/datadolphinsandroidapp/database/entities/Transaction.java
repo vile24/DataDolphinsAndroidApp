@@ -14,8 +14,9 @@ public class Transaction {
     private int transactionId;
 
     private int userId;
+    private String ticker = "";
 
-    private int stockId;
+   // private int stockId;
 
     private int quantity;
 
@@ -27,28 +28,12 @@ public class Transaction {
     Transaction constructor
      */
 
-    public Transaction(int userId, int stockId, int quantity, double purchasePrice, double sellPrice) {
+    public Transaction(int userId, String ticker, int quantity, double purchasePrice, double sellPrice) {
         this.userId = userId;
-        this.stockId = stockId;
+        this.ticker = ticker;
         this.quantity = quantity;
         this.purchasePrice = purchasePrice;
         this.sellPrice = sellPrice;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Transaction that = (Transaction) o;
-        return transactionId == that.transactionId && userId == that.userId
-                && stockId == that.stockId && quantity == that.quantity
-                && Double.compare(purchasePrice, that.purchasePrice) == 0
-                && Double.compare(sellPrice, that.sellPrice) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(transactionId, userId, stockId, quantity, purchasePrice, sellPrice);
     }
 
     public int getTransactionId() {
@@ -67,12 +52,12 @@ public class Transaction {
         this.userId = userId;
     }
 
-    public int getStockId() {
-        return stockId;
+    public String getTicker() {
+        return ticker;
     }
 
-    public void setStockId(int stockId) {
-        this.stockId = stockId;
+    public void setTicker(String ticker) {
+        this.ticker = ticker;
     }
 
     public int getQuantity() {
