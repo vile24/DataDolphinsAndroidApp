@@ -80,6 +80,11 @@ public class StockRepository {
         return stockDAO.getStockByTicker(ticker); // DAO retrieves the stock by ticker.
     }
 
+    public LiveData<Stock> getStockByStockId(int stockID) {
+        return stockDAO.getStockByStockId(stockID); // DAO retrieves the stock by ticker.
+    }
+
+
     // Retrieves all stocks with a specific stock ID as LiveData.
     public LiveData<List<Stock>> getAllStocksByStockIdLiveData(int stockId) {
         return stockDAO.getRecordersetStockIdLiveData(stockId); // DAO retrieves stocks by ID.

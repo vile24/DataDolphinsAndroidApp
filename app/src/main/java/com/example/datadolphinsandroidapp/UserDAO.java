@@ -2,6 +2,8 @@ package com.example.datadolphinsandroidapp;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+
+import com.example.datadolphinsandroidapp.database.StockPortfolioDatabase;
 import com.example.datadolphinsandroidapp.database.entities.User;
 import androidx.room.Delete;
 import androidx.room.Insert;
