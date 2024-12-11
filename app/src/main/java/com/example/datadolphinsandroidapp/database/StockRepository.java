@@ -104,4 +104,10 @@ public class StockRepository {
     public LiveData<List<Transaction>> getTransactionsByUserId(int userId) {
         return transactionDAO.getTransactionsByUserId(userId);
     }
+
+    // Fetch stocks with their quantities using LiveData
+    public LiveData<List<StockWithQuantity>> getStocksWithQuantities() {
+        return stockDAO.getStocksWithQuantities();
+    }
+
 }

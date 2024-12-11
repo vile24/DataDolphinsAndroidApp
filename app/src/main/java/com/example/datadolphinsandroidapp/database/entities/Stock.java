@@ -13,7 +13,6 @@ public class Stock {
     private String ticker;
     private String company;
     private double cost;
-
     /*
     Stock constructor
      */

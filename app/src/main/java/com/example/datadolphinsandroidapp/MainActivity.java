@@ -43,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Bind Portfolio Button
+        binding.btnPortfolio.setOnClickListener(v -> {
+            // Navigate to PortfolioActivity
+            Intent intent = new Intent(MainActivity.this, PortfolioActivity.class);
+            startActivity(intent);
+        });
     }
 
     public static Intent openMain(Context context, String user){

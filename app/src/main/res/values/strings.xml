@@ -30,4 +30,6 @@
     <string name="new_password">New password</string>
     <string name="new_username">New username</string>
     <string name="new_user">New user</string>
+    <string name="portfolio_page">Portfolio Page</string>
+    <string name="go_to_portfolio">Go to Portfolio</string>
 </resources>

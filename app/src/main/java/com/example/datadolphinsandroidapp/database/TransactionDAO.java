@@ -16,6 +16,7 @@ public interface TransactionDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Transaction transaction);    //Insert a single transaction
+
     // Insert multiple transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Transaction... transaction);    // Accepts varargs or an array of Stock
