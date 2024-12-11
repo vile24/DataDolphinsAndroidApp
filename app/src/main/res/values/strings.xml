@@ -20,6 +20,10 @@
     <string name="total_0_00">Total: $0.00</string>
     <string name="enter_company_ticker">enter company ticker</string>
     <string name="enter_ticker_e_g_aapl">Enter ticker (e.g., AAPL)</string>
+    <string name="available_shares">Available Shares</string>
+    <string name="current_shares">Current Shares</string>
+    <string name="enter_sell_quantity">Enter Sell Quantity</string>
+    <string name="sell_button">Sell Button</string>
     <string name="user_s_portfolio"><![CDATA[<User>\'s Portfolio]]></string>
     <string name="portfolio_placeholder">Current Balance:&#xA;$000&#xA;Portfolio Value:&#xA;$000&#xA;Total Balance:&#xA;$000 </string>
     <string name="verify_password">Verify Password</string>
