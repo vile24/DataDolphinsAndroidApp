@@ -32,4 +32,7 @@
     <string name="new_user">New user</string>
     <string name="portfolio_page">Portfolio Page</string>
     <string name="go_to_portfolio">Go to Portfolio</string>
+    <string name="stock_name">Stock Name</string>
+    <string name="quantity_0">Quantity: 0</string>
+    <string name="sell_stock">Sell Stock</string>
 </resources>

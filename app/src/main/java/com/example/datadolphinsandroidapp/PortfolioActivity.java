@@ -4,6 +4,7 @@ package com.example.datadolphinsandroidapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,9 +35,17 @@ public class PortfolioActivity extends AppCompatActivity {
         binding.portfolioRecyclerView.setAdapter(adapter);
 
         // Observe LiveData from Repository
+//        stockRepository.getStocksWithQuantities().observe(this, stockWithQuantities -> {
+//            adapter.submitList(stockWithQuantities);
+//        });
         stockRepository.getStocksWithQuantities().observe(this, stockWithQuantities -> {
+            Log.d("PortfolioActivity", "Number of items: " + stockWithQuantities.size());
+            for (StockWithQuantity stock : stockWithQuantities) {
+                Log.d("PortfolioActivity", "Ticker: " + stock.getTicker() + ", Quantity: " + stock.getQuantity());
+            }
             adapter.submitList(stockWithQuantities);
         });
+
     }
 
     private void navigateToSellActivity(StockWithQuantity stock) {
