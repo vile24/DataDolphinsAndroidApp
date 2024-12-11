@@ -1,17 +1,17 @@
 package com.example.datadolphinsandroidapp.database;
-
 import android.content.Context;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-
 import com.example.datadolphinsandroidapp.BuyActivity;
+
+import com.example.datadolphinsandroidapp.UserDAO;
 import com.example.datadolphinsandroidapp.database.entities.Stock;
 import com.example.datadolphinsandroidapp.database.entities.Transaction;
+import com.example.datadolphinsandroidapp.database.entities.User;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -19,12 +19,20 @@ import java.util.concurrent.Executors;
 
 // This is the database class for the app.
 // When adding a new table, make sure to increase the version number.
-@Database(entities = {Stock.class, Transaction.class}, version = 4, exportSchema = false)
+@Database(entities = {Stock.class, User.class, Transaction.class}, version = 5, exportSchema = false)
+
 public abstract class StockPortfolioDatabase extends RoomDatabase {
+
+    public static final String USER_TABLE = "userTable";
+    private static final String STOCK_PORTFOLIO = "UserDatabase";
+    private static final String TAG = "UserDatabase";
+
+    public abstract UserDAO userDAO();
 
     // Name of the database file.
     private static final String DATABASE_NAME = "stockPortfolioDatabase";
     public static final String STOCK_TABLE = "stockTable";
+
     public static final String TRANSACTION_TABLE = "transactionTable";
 
     // This ensures only one instance of the database is created in memory (RAM).
@@ -63,7 +71,7 @@ public abstract class StockPortfolioDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    // This callback is triggered when the database is created for the first time.
+        // This callback is triggered when the database is created for the first time.
     private static RoomDatabase.Callback getAddDefaultValuesCallback(Context context) {
         return new RoomDatabase.Callback() {
 
@@ -74,23 +82,34 @@ public abstract class StockPortfolioDatabase extends RoomDatabase {
 
                 databaseWriteExecutor.execute(() -> {
                     StockDAO dao = INSTANCE.stockDAO();
+                    UserDAO userDao = INSTANCE.userDAO();
                     dao.deleteAll(); // Clear existing data
+                    userDao.deleteAll();
 
                     StockImporter importer = new StockImporter();
                     importer.addFromAssets(context, "nasdaq100.csv");
-
 
                     ArrayList<Stock> stocks = importer.getStockList();
                     for (Stock item : stocks) {
                         Log.d(BuyActivity.TAG, "Inserting stock: " + item.getTicker());
                         dao.insert(item);
                     }
+                    // Insert default users
+                    User admin1 = new User("a1", "a1");
+                    admin1.setIs_admin(true);
+                    admin1.setCash_balance(999999999.99);
+                    userDao.insert(admin1);
+
+                    User test1 = new User("t1", "t1");
+                    userDao.insert(test1);
+
                 });
                 Log.i("StockPortfolioDatabase", "Default stocks inserted.");
             }
         };
     }
 }
+
 
 
 
