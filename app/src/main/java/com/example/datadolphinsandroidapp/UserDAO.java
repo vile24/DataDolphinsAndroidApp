@@ -21,10 +21,10 @@ public interface UserDAO {
     @Query("SELECT * FROM userTable WHERE user_name = :username")
     LiveData<User> getUserByUserName(String username);
 
-    @Query("DELETE FROM " + UserDatabase.USER_TABLE)
+    @Query("DELETE FROM " + StockPortfolioDatabase.USER_TABLE)
     void deleteAll();
 
-    @Query("SELECT * FROM " + UserDatabase.USER_TABLE + " ORDER BY user_name")
+    @Query("SELECT * FROM " + StockPortfolioDatabase.USER_TABLE + " ORDER BY user_name")
     LiveData<List<User>> getAllUsers();
 
 }
