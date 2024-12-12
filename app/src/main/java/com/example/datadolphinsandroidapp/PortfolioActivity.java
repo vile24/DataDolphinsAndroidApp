@@ -1,3 +1,6 @@
+/**
+ * displays user stock portfolio
+ */
 package com.example.datadolphinsandroidapp;
 import android.content.Intent;
 import android.os.Bundle;
