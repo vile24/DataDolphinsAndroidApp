@@ -119,4 +119,12 @@ List<Transaction> getAllTransactionsRaw();
         return transactionDAO.getAllTransactionsRaw();
     }
 
+    // Update a transaction
+    public void updateTransaction(Transaction transaction) {
+        StockPortfolioDatabase.databaseWriteExecutor.execute(() -> {
+            transactionDAO.update(transaction);
+        });
+    }
+
+
 }

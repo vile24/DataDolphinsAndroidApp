@@ -15,42 +15,42 @@ import com.example.datadolphinsandroidapp.databinding.ActivityPortfolioBinding;
 
 public class PortfolioActivity extends AppCompatActivity {
 
-    private ActivityPortfolioBinding binding;
-    private PortfolioAdapter adapter;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Initialize View Binding
-        binding = ActivityPortfolioBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        // Initialize Repository
-        StockRepository stockRepository = StockRepository.getRepository(getApplication());
-
-        // Set up RecyclerView
-        adapter = new PortfolioAdapter(stock -> navigateToSellActivity(stock));
-        binding.portfolioRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        binding.portfolioRecyclerView.setAdapter(adapter);
-
-        // Observe LiveData from Repository
+//    private ActivityPortfolioBinding binding;
+//    private PortfolioAdapter adapter;
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        // Initialize View Binding
+//        binding = ActivityPortfolioBinding.inflate(getLayoutInflater());
+//        setContentView(binding.getRoot());
+//
+//        // Initialize Repository
+//        StockRepository stockRepository = StockRepository.getRepository(getApplication());
+//
+//        // Set up RecyclerView
+//        adapter = new PortfolioAdapter(stock -> navigateToSellActivity(stock));
+//        binding.portfolioRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        binding.portfolioRecyclerView.setAdapter(adapter);
+//
+//        // Observe LiveData from Repository
+////        stockRepository.getStocksWithQuantities().observe(this, stockWithQuantities -> {
+////            adapter.submitList(stockWithQuantities);
+////        });
 //        stockRepository.getStocksWithQuantities().observe(this, stockWithQuantities -> {
+//            Log.d("PortfolioActivity", "Number of items: " + stockWithQuantities.size());
+//            for (StockWithQuantity stock : stockWithQuantities) {
+//                Log.d("PortfolioActivity", "Ticker: " + stock.getTicker() + ", Quantity: " + stock.getQuantity());
+//            }
 //            adapter.submitList(stockWithQuantities);
 //        });
-        stockRepository.getStocksWithQuantities().observe(this, stockWithQuantities -> {
-            Log.d("PortfolioActivity", "Number of items: " + stockWithQuantities.size());
-            for (StockWithQuantity stock : stockWithQuantities) {
-                Log.d("PortfolioActivity", "Ticker: " + stock.getTicker() + ", Quantity: " + stock.getQuantity());
-            }
-            adapter.submitList(stockWithQuantities);
-        });
-
-    }
-
-    private void navigateToSellActivity(StockWithQuantity stock) {
-        Intent intent = new Intent(this, SellActivity.class);
-        intent.putExtra(SellActivity.EXTRA_TICKER, stock.getTicker());
-        startActivity(intent);
-    }
+//
+//    }
+//
+//    private void navigateToSellActivity(StockWithQuantity stock) {
+//        Intent intent = new Intent(this, SellActivity.class);
+//        intent.putExtra(SellActivity.EXTRA_TICKER, stock.getTicker());
+//        startActivity(intent);
+ //   }
 }

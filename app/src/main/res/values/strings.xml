@@ -37,4 +37,5 @@
     <string name="sell_stock">Sell Stock</string>
     <string name="total_balance">Total Balance:</string>
     <string name="portfolio_balance">Portfolio balance</string>
+    <string name="buy_stock">Buy Stock</string>
 </resources>

@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.datadolphinsandroidapp.database.entities.Transaction;
 
@@ -43,6 +44,13 @@ public interface TransactionDAO {
     // For debug only
     @Query("SELECT * FROM transactionTable")
     List<Transaction> getAllTransactionsRaw();
+
+
+    @Query("SELECT * FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " WHERE userId = :userId AND ticker = :ticker")
+    List<Transaction> getAllTransactionsUserIdAndTicker(int userId, String ticker);
+
+    @Update
+    void update(Transaction transaction);
 
 
 }

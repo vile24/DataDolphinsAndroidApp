@@ -73,6 +73,7 @@ public class PortfolioAdapter extends ListAdapter<StockWithQuantity, PortfolioAd
             binding.stockName.setText(stock.getTicker());
             binding.stockQuantity.setText(String.valueOf(stock.getQuantity()));
             binding.sellRecycler.setOnClickListener(v -> onSellClickListener.accept(stock));
+
         }
     }
 }
