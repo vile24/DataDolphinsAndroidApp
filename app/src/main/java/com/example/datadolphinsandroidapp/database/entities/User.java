@@ -4,9 +4,10 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.ColumnInfo;
 
-import com.example.datadolphinsandroidapp.UserDatabase;
+import com.example.datadolphinsandroidapp.StockLogDAO;
+import com.example.datadolphinsandroidapp.database.StockPortfolioDatabase;
 
-@Entity(tableName = UserDatabase.USER_TABLE)
+@Entity(tableName = StockPortfolioDatabase.USER_TABLE)
 public class User {
     @PrimaryKey
     @NonNull
