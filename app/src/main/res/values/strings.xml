@@ -36,4 +36,13 @@
     <string name="user_stocks">User stocks</string>
     <string name="sell_stock">Sell Stock</string>
     <string name="hello">Hello</string>
+    <string name="stock_name">Stock Name</string>
+    <string name="stock_symbol">Stock Symbol</string>
+    <string name="price">Price</string>
+    <string name="sells">Sell</string>
+    <string name="stock_names">Stock Name</string>
+    <string name="quantitys">Quantity</string>
+    <string name="sellss">Sell</string>
+    <string name="user_stock">user stock</string>
+    <string name="cell">cell</string>
 </resources>

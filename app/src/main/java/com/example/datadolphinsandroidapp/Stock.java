@@ -28,7 +28,7 @@ public class Stock {
     }
 
     public void setName(String name) {
-        Name = name;
+        this.Name = name;
     }
 
     public String getSymbol() {
