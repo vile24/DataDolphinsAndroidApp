@@ -38,4 +38,5 @@
     <string name="portfolio_balance">Portfolio balance</string>
     <string name="buy_stock">Buy Stock</string>
     <string name="user_s_portfolio"><![CDATA[<User>\'s Portfolio]]></string>
+    <string name="transactions">Transactions</string>
 </resources>

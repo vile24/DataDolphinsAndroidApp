@@ -25,12 +25,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        // Set up a button to navigate to BuyActivity
-        binding.buyButton.setOnClickListener(new View.OnClickListener() {
+        // Set up a button to navigate to transactions page
+        binding.transactionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Open BuyActivity (no ticker passed from MainActivity)
-                Intent intent = BuyActivity.buyIntentFactory(MainActivity.this);
+                Intent intent = TransactionActivity.transactionIntentFactory(MainActivity.this);
                 startActivity(intent);
             }
         });

@@ -25,4 +25,11 @@ import java.text.ParsePosition;
 
 public class TransactionActivity extends AppCompatActivity {
 
+
+
+    // creating an Intent to navigate from TransactionActivity to BuyActivity.
+    public static Intent transactionIntentFactory(Context context) {
+        return new Intent(context, TransactionActivity.class);
+    }
+
 }
