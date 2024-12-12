@@ -23,7 +23,7 @@ import java.text.NumberFormat;
 import java.text.ParsePosition;
 //import com.example.datadolphinsandroidapp.databinding.ActivityPortfolioBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class TransactionActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     private StockRepository stockRepository;
@@ -54,15 +54,15 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         stockRepository.getStocksWithQuantities().observe(this, stockWithQuantities -> {
-                    Log.d("TransactionActivity", "Number of items: " + stockWithQuantities.size());
-                    for (StockWithQuantity stock : stockWithQuantities) {
-                        Log.d("TransactionActivity", "Ticker: " + stock.getTicker() + ", Quantity: " + stock.getQuantity());
-                        fortfolioBalance += stock.getPurchasePrice() * stock.getQuantity();
-                    }
-                    adapter.submitList(stockWithQuantities);
-                    NumberFormat formatter = NumberFormat.getCurrencyInstance();
+            Log.d("TransactionActivity", "Number of items: " + stockWithQuantities.size());
+            for (StockWithQuantity stock : stockWithQuantities) {
+                Log.d("TransactionActivity", "Ticker: " + stock.getTicker() + ", Quantity: " + stock.getQuantity());
+                fortfolioBalance += stock.getPurchasePrice() * stock.getQuantity();
+            }
+            adapter.submitList(stockWithQuantities);
+            NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
-                    String formattedAmount = formatter.format(fortfolioBalance);
+            String formattedAmount = formatter.format(fortfolioBalance);
 
             binding.portfolioBalancePlaceHolder.setText((formattedAmount));
         });
@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
         binding.buyStockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open BuyActivity (no ticker passed from MainActivity)
-                Intent intent = BuyActivity.buyIntentFactory(MainActivity.this);
+                // Open BuyActivity (no ticker passed from TransactionActivity)
+                Intent intent = BuyActivity.buyIntentFactory(TransactionActivity.this);
                 startActivity(intent);
             }
         });
@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
 //        binding.sellButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                // Open SellActivity (no ticker passed from MainActivity)
-//                Intent intent = SellActivity.sellIntentFactory(MainActivity.this);
+//                // Open SellActivity (no ticker passed from TransactionActivity)
+//                Intent intent = SellActivity.sellIntentFactory(TransactionActivity.this);
 //                startActivity(intent);
 //            }
 //        });
@@ -99,13 +99,13 @@ public class MainActivity extends AppCompatActivity {
     // Bind Portfolio Button
 //        binding.btnPortfolio.setOnClickListener(v -> {
 //            // Navigate to TransactionActivity
-//            Intent intent = new Intent(MainActivity.this, TransactionActivity.class);
+//            Intent intent = new Intent(TransactionActivity.this, TransactionActivity.class);
 //            startActivity(intent);
 //        });
 
 
     public static Intent openMain(Context context, String user){
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, TransactionActivity.class);
         intent.putExtra(USER, user);
         //intent.getDataString();
         return intent;

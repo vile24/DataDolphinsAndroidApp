@@ -48,7 +48,7 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
         binding = ActivityBuyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Get the ticker passed from MainActivity
+        // Get the ticker passed from TransactionActivity
         Intent intent = getIntent();
         initBalanceDisplay();
         // Key to get pass
@@ -175,7 +175,7 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    // creating an Intent to navigate from MainActivity to BuyActivity.
+    // creating an Intent to navigate from TransactionActivity to BuyActivity.
     public static Intent buyIntentFactory(Context context) {
         return new Intent(context, BuyActivity.class);
     }
