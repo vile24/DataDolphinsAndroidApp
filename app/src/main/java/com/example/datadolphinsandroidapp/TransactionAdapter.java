@@ -1,6 +1,3 @@
-/*This file determines how each item is displayed in the RecyclerView.*/
-
-
 package com.example.datadolphinsandroidapp;
 
 import android.util.Log;
@@ -17,11 +14,12 @@ import com.example.datadolphinsandroidapp.databinding.RecyclerItemStockBinding;
 
 import java.util.function.Consumer;
 
-public class PortfolioAdapter extends ListAdapter<StockWithQuantity, PortfolioAdapter.ViewHolder> {
+/*This class determines how each item is displayed in the RecyclerView.*/
+public class TransactionAdapter extends ListAdapter<StockWithQuantity, TransactionAdapter.ViewHolder> {
 
     private final Consumer<StockWithQuantity> onSellClickListener;
 
-    public PortfolioAdapter(Consumer<StockWithQuantity> onSellClickListener) {
+    public TransactionAdapter(Consumer<StockWithQuantity> onSellClickListener) {
         super(new DiffUtil.ItemCallback<StockWithQuantity>() {
             @Override
             public boolean areItemsTheSame(@NonNull StockWithQuantity oldItem, @NonNull StockWithQuantity newItem) {
@@ -52,12 +50,9 @@ public class PortfolioAdapter extends ListAdapter<StockWithQuantity, PortfolioAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         StockWithQuantity stock = getItem(position);
-        Log.d("PortfolioAdapter", "Binding item at position " + position + ": Ticker = " + stock.getTicker() + ", Quantity = " + stock.getQuantity());
+        Log.d("TransactionAdapter", "Binding item at position " + position + ": Ticker = " + stock.getTicker() + ", Quantity = " + stock.getQuantity());
         holder.bind(stock, onSellClickListener);
     }
-
-
-
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {

@@ -51,7 +51,7 @@
         <!-- Total Value Layout -->
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/portfolioRecyclerView"
+            android:id="@+id/transactionRecyclerView"
             android:layout_width="400dp"
             android:layout_height="320dp"
             android:layout_margin="8dp"
@@ -63,6 +63,17 @@
             app:layout_constraintVertical_bias="0.044"
             tools:listitem="@layout/recycler_item_stock" />
 
+    <Button
+        android:id="@+id/buyStockButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="672dp"
+        android:text="@string/buy_stock"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 
