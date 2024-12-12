@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         binding.portBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     public static Intent openMain(Context context, String user){
@@ -53,8 +51,5 @@ public class MainActivity extends AppCompatActivity {
         // intent.getDataString();
         return intent;
     }
-
-
-
 
 }

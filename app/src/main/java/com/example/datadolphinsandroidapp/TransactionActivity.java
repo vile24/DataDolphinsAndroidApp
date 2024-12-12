@@ -21,15 +21,26 @@ import com.example.datadolphinsandroidapp.databinding.ActivityTransactionBinding
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
-//import com.example.datadolphinsandroidapp.databinding.ActivityPortfolioBinding;
+
 
 public class TransactionActivity extends AppCompatActivity {
+    private ActivityTransactionBinding binding;
+    private StockRepository stockRepository;
 
+    private PortfolioAdapter adapter;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityTransactionBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        stockRepository = StockRepository.getRepository(getApplication());
+
+    }
 
     // creating an Intent to navigate from TransactionActivity to BuyActivity.
     public static Intent transactionIntentFactory(Context context) {
         return new Intent(context, TransactionActivity.class);
     }
-
 }
