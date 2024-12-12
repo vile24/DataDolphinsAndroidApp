@@ -3,7 +3,6 @@
  */
 package com.example.datadolphinsandroidapp.viewHolders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +25,13 @@ public class PortfolioViewHolder extends RecyclerView.ViewHolder {
         stockQuantityTextView = itemView.findViewById(R.id.recyclerItemStockQuantityTextView);
     }
 
-    public void bind(String company, String ticker, double cost) {
-        stockNameTextView.setText(company + " (" + ticker + ")");
-        stockQuantityTextView.setText("Cost: $" + cost);
+    //binding data from stocks to TextView
+    public void bind(String stockName, String stockQuantity) {
+        //set stock name
+        stockNameTextView.setText(stockName);
+        //set stock quantity
+        stockQuantityTextView.setText("Quantity: " + stockQuantity);
     }
-
-
     //Creating a new instance of PortfolioViewHolder
     public static PortfolioViewHolder create(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())

@@ -27,9 +27,8 @@ public class PortfolioAdapter extends ListAdapter<Stock, PortfolioViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull PortfolioViewHolder holder, int position) {
         Stock currentStock = getItem(position);
-        holder.bind(currentStock.getCompany(), currentStock.getTicker(), currentStock.getCost());
+        holder.bind(currentStock.getCompany(), String.valueOf(currentStock.getStockId())); // Pass name and stock ID/quantity
     }
-
 
     //checking items represent same stock
     public static class PortfolioLogDiff extends DiffUtil.ItemCallback<Stock> {
