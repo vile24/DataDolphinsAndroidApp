@@ -35,4 +35,5 @@
     <string name="portfolio_page">Portfolio Page</string>
     <string name="user_stocks">User stocks</string>
     <string name="sell_stock">Sell Stock</string>
+    <string name="hello">Hello</string>
 </resources>
