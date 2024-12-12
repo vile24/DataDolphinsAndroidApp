@@ -30,13 +30,13 @@ public interface StockDAO {
     /**
      * @return a list of stock value objects from table
      */
-    @Query("SELECT * FROM " + AppDataBase.STOCK_VALUE_TABLE)
-    List<Stock> getStockValues();
+//    @Query("SELECT * FROM " + AppDataBase.STOCK_VALUE_TABLE)
+//    List<Stock> getStockValues();
 
-    @Query("SELECT * FROM " + AppDataBase.STOCK_VALUE_TABLE + "WHERE stockID = :stockID")
-    Stock getStockValuesByID(int stockID);
-
-
+//    @Query("SELECT * FROM " + AppDataBase.STOCK_VALUE_TABLE + "WHERE stockID = :stockID")
+//    Stock getStockValuesByID(int stockID);
+//
+//
 
 
 

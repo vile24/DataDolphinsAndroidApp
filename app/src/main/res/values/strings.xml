@@ -30,4 +30,9 @@
     <string name="new_password">New password</string>
     <string name="new_username">New username</string>
     <string name="new_user">New user</string>
+    <string name="portfolio">Portfolio</string>
+    <string name="portfolio_list">Portfolio List</string>
+    <string name="portfolio_page">Portfolio Page</string>
+    <string name="user_stocks">User stocks</string>
+    <string name="sell_stock">Sell Stock</string>
 </resources>
