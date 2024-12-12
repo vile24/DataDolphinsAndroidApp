@@ -1,4 +1,5 @@
 package com.example.datadolphinsandroidapp;
+import static android.os.Build.USER;
 
 import android.content.Intent;
 import android.content.Context;
@@ -14,8 +15,6 @@ import com.example.datadolphinsandroidapp.databinding.ActivityMainBinding;
 
 public class LoginActivity extends AppCompatActivity {
     private UserRepository repository;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -28,11 +27,8 @@ public class LoginActivity extends AppCompatActivity {
         newUserButton.setOnClickListener(v -> newUser());
     }
 
-
-
-
     private void newUser() {
-        Intent newUser = new Intent(LoginActivity.this, newUserActivity.class);
+        Intent newUser = new Intent(LoginActivity.this, NewUserActivity.class);
         Toast.makeText(this, "New User", Toast.LENGTH_SHORT).show();
         startActivity(newUser);
     }
@@ -90,8 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         void onResult(boolean isValid);
     }
 
-
-    public static Intent loginIntentFactory(Context context){
+    public static Intent LoginActivityintent (Context context){
         Intent intent = new Intent(context, LoginActivity.class);
         // intent.getDataString();
         return intent;
