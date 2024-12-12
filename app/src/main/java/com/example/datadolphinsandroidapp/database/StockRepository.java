@@ -126,5 +126,9 @@ List<Transaction> getAllTransactionsRaw();
         });
     }
 
-
+    public void deleteTransaction(Transaction transaction) {
+        StockPortfolioDatabase.databaseWriteExecutor.execute(() -> {
+            transactionDAO.delete(transaction);
+        });
+    }
 }

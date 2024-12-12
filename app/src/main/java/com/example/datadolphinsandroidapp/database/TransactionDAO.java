@@ -2,6 +2,7 @@ package com.example.datadolphinsandroidapp.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -38,7 +39,7 @@ public interface TransactionDAO {
     LiveData<List<Transaction>> getTransactionsByUserId(int userId);
 
     // Query with no aliases, matches fields in StockWithQuantity
-    @Query("SELECT ticker, SUM(quantity) AS quantity FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " GROUP BY ticker")
+    @Query("SELECT ticker, purchasePrice, SUM(quantity) AS quantity FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " GROUP BY ticker")
     LiveData<List<StockWithQuantity>> getStocksWithQuantities();
 
     // For debug only
@@ -53,4 +54,6 @@ public interface TransactionDAO {
     void update(Transaction transaction);
 
 
+    @Delete
+    void delete(Transaction transaction);
 }

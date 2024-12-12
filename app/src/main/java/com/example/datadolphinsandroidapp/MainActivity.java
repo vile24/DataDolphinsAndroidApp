@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     private PortfolioAdapter adapter;
 
+    double fortfolioBalance = 0.0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,10 @@ public class MainActivity extends AppCompatActivity {
             Log.d("PortfolioActivity", "Number of items: " + stockWithQuantities.size());
             for (StockWithQuantity stock : stockWithQuantities) {
                 Log.d("PortfolioActivity", "Ticker: " + stock.getTicker() + ", Quantity: " + stock.getQuantity());
+                fortfolioBalance+= stock.getPurchasePrice() * stock.getQuantity();
             }
             adapter.submitList(stockWithQuantities);
+            binding.portfolioBalancePlaceHolder.setText("$" + String.valueOf(fortfolioBalance));
         });
 
         // Set up a button to navigate to BuyActivity
