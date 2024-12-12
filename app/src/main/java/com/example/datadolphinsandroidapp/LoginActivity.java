@@ -1,30 +1,45 @@
 package com.example.datadolphinsandroidapp;
-import static android.os.Build.USER;
 
 import android.content.Intent;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import com.example.datadolphinsandroidapp.database.entities.User;
-import com.example.datadolphinsandroidapp.databinding.ActivityMainBinding;
+import com.example.datadolphinsandroidapp.databinding.ActivityLoginBinding;
+
 
 
 public class LoginActivity extends AppCompatActivity {
     private UserRepository repository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
         repository = UserRepository.getRepository(getApplication());
-        Button loginButton = findViewById(R.id.loginLogInButton);
-        Button newUserButton = findViewById(R.id.loginNewUser);
-        loginButton.setOnClickListener(v -> logIn());
-        newUserButton.setOnClickListener(v -> newUser());
+        ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        binding.loginLogInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText userNameIn =  findViewById(R.id.loginUsername);
+                String username = userNameIn.getText().toString();
+                Intent intent = MainActivity.openMain(LoginActivity.this,username);
+                startActivity(intent);
+            }
+        });
+
+        binding.loginNewUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = NewUserActivity.createNewUserIntent(LoginActivity.this);
+                startActivity(intent);
+            }
+        });
     }
 
     private void newUser() {
@@ -32,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(this, "New User", Toast.LENGTH_SHORT).show();
         startActivity(newUser);
     }
+
 
     private void logIn() {
         EditText userNameIn =  findViewById(R.id.loginUsername);
@@ -86,10 +102,9 @@ public class LoginActivity extends AppCompatActivity {
         void onResult(boolean isValid);
     }
 
-    public static Intent LoginActivityintent (Context context){
-        Intent intent = new Intent(context, LoginActivity.class);
+    public static Intent loginIntentFactory (Context context){
         // intent.getDataString();
-        return intent;
+        return new Intent(context, LoginActivity.class);
     }
 
 }

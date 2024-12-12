@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Set up a button to navigate to BuyActivity
         binding.portBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static Intent openMain(Context context, String user){
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(USER, user);
-        //intent.getDataString();
+        intent.putExtra("USER", user);
+        // intent.getDataString();
         return intent;
     }
 
