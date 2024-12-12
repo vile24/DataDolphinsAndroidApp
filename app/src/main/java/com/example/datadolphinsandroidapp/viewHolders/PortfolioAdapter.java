@@ -16,7 +16,6 @@ public class PortfolioAdapter extends ListAdapter<Stock, PortfolioViewHolder> {
     public PortfolioAdapter(@NonNull DiffUtil.ItemCallback<Stock> diffCallback) {
         super(diffCallback);
     }
-
     //create new layout
     @NonNull
     @Override

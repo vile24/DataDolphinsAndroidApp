@@ -32,7 +32,7 @@ public class PortfolioViewHolder extends RecyclerView.ViewHolder {
         //set stock quantity
         stockQuantityTextView.setText("Quantity: " + stockQuantity);
     }
-    //Creating a new instance of PortfolioViewHolder
+    //creating a new instance of PortfolioViewHolder
     public static PortfolioViewHolder create(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.portfolio_recycler_item, parent, false);
