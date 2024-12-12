@@ -35,4 +35,6 @@
     <string name="stock_name">Stock Name</string>
     <string name="quantity_0">Quantity: 0</string>
     <string name="sell_stock">Sell Stock</string>
+    <string name="total_balance">Total Balance:</string>
+    <string name="portfolio_balance">Portfolio balance</string>
 </resources>
