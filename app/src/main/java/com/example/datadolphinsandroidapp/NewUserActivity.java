@@ -1,6 +1,8 @@
 package com.example.datadolphinsandroidapp;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,4 +50,11 @@ public class NewUserActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    public static Intent NewUserActivityintent (Context context){
+        Intent intent = new Intent(context, NewUserActivity.class);
+        // intent.getDataString();
+        return intent;
+    }
+
 }

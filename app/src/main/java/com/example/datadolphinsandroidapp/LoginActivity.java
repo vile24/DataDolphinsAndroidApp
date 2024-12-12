@@ -1,5 +1,8 @@
 package com.example.datadolphinsandroidapp;
+import static android.os.Build.USER;
+
 import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -7,11 +10,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import com.example.datadolphinsandroidapp.database.entities.User;
+import com.example.datadolphinsandroidapp.databinding.ActivityMainBinding;
+
 
 public class LoginActivity extends AppCompatActivity {
     private UserRepository repository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         repository = UserRepository.getRepository(getApplication());
@@ -76,10 +82,14 @@ public class LoginActivity extends AppCompatActivity {
 //    }
 
 
-
-
-
     public interface PasswordCheckCallback {
         void onResult(boolean isValid);
     }
+
+    public static Intent LoginActivityintent (Context context){
+        Intent intent = new Intent(context, LoginActivity.class);
+        // intent.getDataString();
+        return intent;
+    }
+
 }
