@@ -1,7 +1,10 @@
 package com.example.datadolphinsandroidapp;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -10,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.datadolphinsandroidapp.database.entities.User;
 
-public class NewUserActivity extends AppCompatActivity {
+public class newUserActivity extends AppCompatActivity {
     private UserRepository repository;
 
     @Override
@@ -20,8 +23,18 @@ public class NewUserActivity extends AppCompatActivity {
         Button newUserdoneButton = findViewById(R.id.newUserDone);
         Button newUserBackButton = findViewById(R.id.newUserBack);
         newUserdoneButton.setOnClickListener(v -> newUser());
-        newUserBackButton.setOnClickListener(v -> finish());
+
+        newUserdoneButton.setOnClickListener(v -> newUser());
         repository = UserRepository.getRepository(getApplication());
+
+
+        newUserBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = LoginActivity.loginIntentFactory(newUserActivity.this);
+                startActivity(intent);
+            }
+        });
     }
     private void newUser() {
         if (testPasswordMatch()) {
@@ -48,4 +61,11 @@ public class NewUserActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    public static Intent createNewUserIntent(Context context){
+        Intent intent = new Intent(context, newUserActivity.class);
+        // intent.getDataString();
+        return intent;
+    }
+
 }

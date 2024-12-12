@@ -42,7 +42,7 @@ public abstract class StockPortfolioDatabase extends RoomDatabase {
 
     // The database should not run operations on the main thread (to avoid slowing down the app).
     // Instead, database tasks are handled in the background, using a maximum of 4 threads.
-    private static final int NUMBER_OF_THREADS = 5;
+    private static final int NUMBER_OF_THREADS = 6;
 
     // A pool of background threads created for handling database tasks efficiently.
     public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);

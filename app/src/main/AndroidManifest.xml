@@ -30,7 +30,7 @@
         <activity android:name=".LoginActivity"
             android:exported="true">
         </activity>
-        <activity android:name=".NewUserActivity"
+        <activity android:name=".newUserActivity"
             android:exported="true">
         </activity>
     </application>

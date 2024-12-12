@@ -15,12 +15,13 @@ import com.example.datadolphinsandroidapp.database.StockRepository;
 import com.example.datadolphinsandroidapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
 
@@ -43,6 +44,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Set up a button to navigate to BuyActivity
+        binding.portBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open SellActivity (no ticker passed from MainActivity)
+                Intent intent = LoginActivity.loginIntentFactory(MainActivity.this);
+                startActivity(intent);
+            }
+        });
     }
 
     public static Intent openMain(Context context, String user){
@@ -51,5 +62,8 @@ public class MainActivity extends AppCompatActivity {
         //intent.getDataString();
         return intent;
     }
+
+
+
 
 }

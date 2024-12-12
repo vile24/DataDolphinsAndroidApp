@@ -1,5 +1,7 @@
 package com.example.datadolphinsandroidapp;
+
 import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -7,11 +9,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import com.example.datadolphinsandroidapp.database.entities.User;
+import com.example.datadolphinsandroidapp.databinding.ActivityMainBinding;
+
 
 public class LoginActivity extends AppCompatActivity {
     private UserRepository repository;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         repository = UserRepository.getRepository(getApplication());
@@ -21,8 +28,11 @@ public class LoginActivity extends AppCompatActivity {
         newUserButton.setOnClickListener(v -> newUser());
     }
 
+
+
+
     private void newUser() {
-        Intent newUser = new Intent(LoginActivity.this, NewUserActivity.class);
+        Intent newUser = new Intent(LoginActivity.this, newUserActivity.class);
         Toast.makeText(this, "New User", Toast.LENGTH_SHORT).show();
         startActivity(newUser);
     }
@@ -76,10 +86,15 @@ public class LoginActivity extends AppCompatActivity {
 //    }
 
 
-
-
-
     public interface PasswordCheckCallback {
         void onResult(boolean isValid);
     }
+
+
+    public static Intent loginIntentFactory(Context context){
+        Intent intent = new Intent(context, LoginActivity.class);
+        // intent.getDataString();
+        return intent;
+    }
+
 }
