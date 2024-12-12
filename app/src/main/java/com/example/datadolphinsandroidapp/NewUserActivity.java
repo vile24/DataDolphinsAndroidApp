@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.datadolphinsandroidapp.database.entities.User;
 
-public class newUserActivity extends AppCompatActivity {
+public class NewUserActivity extends AppCompatActivity {
     private UserRepository repository;
 
     @Override
@@ -31,7 +31,7 @@ public class newUserActivity extends AppCompatActivity {
         newUserBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = LoginActivity.loginIntentFactory(newUserActivity.this);
+                Intent intent = LoginActivity.loginIntentFactory(NewUserActivity.this);
                 startActivity(intent);
             }
         });
@@ -57,15 +57,16 @@ public class newUserActivity extends AppCompatActivity {
         if(pass1.getText().toString().equals(pass2.getText().toString())){
             return true;
         }else {
+
             Toast.makeText(this, "Pass don't match", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
 
-    public static Intent createNewUserIntent(Context context){
-        Intent intent = new Intent(context, newUserActivity.class);
-        // intent.getDataString();
-        return intent;
-    }
 
+
+
+    public static Intent createNewUserIntent(Context context) {
+        return new Intent(context, NewUserActivity.class);
+    }
 }
