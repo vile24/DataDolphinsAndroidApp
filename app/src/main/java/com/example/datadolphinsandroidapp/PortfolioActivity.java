@@ -30,15 +30,23 @@ public class PortfolioActivity extends AppCompatActivity {
         //initialize adapter
         adapter = new PortfolioAdapter(new PortfolioAdapter.PortfolioLogDiff());
         stocksRecyclerView.setAdapter(adapter);
-
         //initialize ViewModel
         portfolioViewModel = new ViewModelProvider(this).get(PortfolioViewModel.class);
 
-        //observe list of stocks from viewmodel
         portfolioViewModel.getAllLogsById().observe(this, stocks -> {
-            // Submit the list to the adapter
+            if (stocks != null && !stocks.isEmpty()) {
+                adapter.submitList(stocks);
+            } else {
+                Log.d("PortfolioActivity", "Stock list is empty.");
+            }
+        });
+
+
+        portfolioViewModel.getAllLogsById().observe(this, stocks -> {
+            Log.d("PortfolioActivity", "Stock List Size: " + stocks.size());
             adapter.submitList(stocks);
         });
+
 
         // onclick listener
         Button sellButton = findViewById(R.id.sellButton);
