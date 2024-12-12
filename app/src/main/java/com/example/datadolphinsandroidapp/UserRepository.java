@@ -2,6 +2,7 @@ package com.example.datadolphinsandroidapp;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import com.example.datadolphinsandroidapp.database.StockPortfolioDatabase;
 
 import com.example.datadolphinsandroidapp.database.entities.User;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class UserRepository {
     private static UserRepository repository;
 
     private UserRepository(Application application) {
-        UserDatabase db = UserDatabase.getDatabase(application);
+        StockPortfolioDatabase db = StockPortfolioDatabase.getDatabase(application);
         this.userDAO = db.userDAO();
         LiveData<List<User>> allLogs = userDAO.getAllUsers();
     }
@@ -28,7 +29,7 @@ public class UserRepository {
     }
 
     public  void insertUser(User... users){
-        UserDatabase.databaseWriteExecutor.execute(() ->{
+        StockPortfolioDatabase.databaseWriteExecutor.execute(() ->{
             for (User user : users) {
                 userDAO.insert(user);
             }

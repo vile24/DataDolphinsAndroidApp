@@ -42,10 +42,10 @@ public abstract class StockPortfolioDatabase extends RoomDatabase {
 
     // The database should not run operations on the main thread (to avoid slowing down the app).
     // Instead, database tasks are handled in the background, using a maximum of 4 threads.
-    private static final int NUMBER_OF_THREADS = 4;
+    private static final int NUMBER_OF_THREADS = 6;
 
     // A pool of background threads created for handling database tasks efficiently.
-    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     // Abstract method to get access to the StockDAO for database operations.
     public abstract StockDAO stockDAO();
@@ -53,7 +53,7 @@ public abstract class StockPortfolioDatabase extends RoomDatabase {
     public abstract TransactionDAO transactionDAO();
 
     // This method provides the database instance. If it doesn't exist, it creates one.
-    static StockPortfolioDatabase getDatabase(final Context context) {
+    public static StockPortfolioDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (StockPortfolioDatabase.class) {
                 if (INSTANCE == null) {
