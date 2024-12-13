@@ -5,14 +5,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import com.example.datadolphinsandroidapp.database.entities.User;
 import com.example.datadolphinsandroidapp.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
-    private @NonNull ActivityLoginBinding binding;
+    private ActivityLoginBinding binding;
     private UserRepository repository;
 
     @Override
@@ -35,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private void verifyUser() {
         String enteredUserName = binding.loginUsername.getText().toString().trim();
         String enteredPass = binding.loginPassword.getText().toString().trim();
+
         if (enteredUserName.isEmpty() || enteredPass.isEmpty()) {
             Toast.makeText(this, "Empty Input Detected", Toast.LENGTH_SHORT).show();
             return;
@@ -43,15 +43,21 @@ public class LoginActivity extends AppCompatActivity {
         userObserver.observe(this, user -> {
             if (user != null && enteredPass.equals(user.getPassword())) {
                 Toast.makeText(this, "Logging In", Toast.LENGTH_SHORT).show();
-                startActivity(MainActivity.openMain(getApplicationContext(), user));
+
+                Intent intent = MainActivity.openMain(getApplicationContext(), user);
+                startActivity(intent);
+
                 finish();
             } else {
-                Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Invalid Login", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public static Intent loginIntentFactory(Context context) {
         return new Intent(context, LoginActivity.class);
+
+
     }
+
 }
