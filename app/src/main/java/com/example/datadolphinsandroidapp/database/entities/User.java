@@ -19,7 +19,7 @@ public class User {
     @ColumnInfo(name = "is_admin")
     private Boolean is_admin = false;
     @ColumnInfo(name = "cash_balance")
-    private double cash_balance = 100.00;
+    private double cash_balance = 100000.00;
 
     /*
     Standard user constructor

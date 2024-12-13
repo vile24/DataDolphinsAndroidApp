@@ -16,6 +16,12 @@ import com.example.datadolphinsandroidapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    static String USER = "com.example.datadolphinsandroidapp.MainActivity.USER";
+
+    private UserRepository userRepository;
+
+    private String userName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -24,14 +30,22 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Intent intent = getIntent();
+        userName = intent.getStringExtra(USER);
+        if (userName == null) {
+        Intent loginIntent = LoginActivity.loginIntentFactory(MainActivity.this);
+            startActivity(loginIntent);
+            return;
+        }
+
 
         // Set up a button to navigate to transactions page
         binding.transactionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Open BuyActivity (no ticker passed from MainActivity)
-                Intent intent = TransactionActivity.transactionIntentFactory(MainActivity.this);
-                startActivity(intent);
+                Intent transactionIntent = TransactionActivity.transactionIntentFactory(MainActivity.this, userName);
+                startActivity(transactionIntent);
             }
         });
 
@@ -47,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static Intent openMain(Context context, String user){
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra("USER", user);
+        intent.putExtra(USER, user);
         // intent.getDataString();
         return intent;
     }
