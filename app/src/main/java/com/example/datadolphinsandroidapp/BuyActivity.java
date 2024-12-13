@@ -57,10 +57,7 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
 
         userRepository.getUserByUserName(userName).observe(this, user -> {
             this.user = user;
-
-            NumberFormat formatter = NumberFormat.getCurrencyInstance();
-            String formattedAmount = formatter.format(user.getCash_balance());
-            binding.availableCashBalancePlaceholder.setText(formattedAmount);;
+            binding.availableCashBalancePlaceholder.setText(formatMoney(user.getCash_balance()));
         });
 
         // Get the ticker passed from TransactionActivity
@@ -152,7 +149,7 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
                 totalCost = stock.getCost() * quantity;
 
                 // Update the cost placeholder with the calculated total
-                binding.costPlaceholder.setText(String.format(Locale.US, "$%.2f", totalCost));
+                binding.costPlaceholder.setText(formatMoney(totalCost));
             } else {
                 toastMaker(String.format("%s is not a valid ticker", ticker));
                 // Reset cursor to the beginning of the input
@@ -182,7 +179,7 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
     // Set initial balance in display
     private void initBalanceDisplay() {
         if (user != null) {
-            binding.availableCashBalancePlaceholder.setText(String.format(Locale.US, "$%.2f", user.getCash_balance()));
+            binding.availableCashBalancePlaceholder.setText(formatMoney(user.getCash_balance()));
         }
         binding.tickerInputEditText.setText("");
         binding.quantityInputEditText.setText("");
@@ -199,6 +196,12 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
         intent.putExtra(USER, userName);
         // intent.getDataString();
         return intent;
+
+    }
+
+    private String formatMoney(double value) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        return formatter.format(value);
 
     }
 

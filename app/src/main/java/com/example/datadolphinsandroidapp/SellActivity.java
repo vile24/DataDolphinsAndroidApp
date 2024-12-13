@@ -92,7 +92,7 @@ public class SellActivity extends AppCompatActivity {
 //               Toast.makeText(this, "Please enter a valid quantity.", Toast.LENGTH_SHORT).show();
                 }
                 double proceeds = quantity * transaction.getPurchasePrice();
-                binding.sellCostPlaceHolder.setText(String.format(Locale.US, "$%.2f", proceeds));
+                binding.sellCostPlaceHolder.setText(formatMoney(proceeds));
             }
         });
     }
@@ -161,5 +161,11 @@ public class SellActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_QUANTITY, quantity);
         intent.putExtra(USER, userName);
         return intent;
+    }
+
+    private String formatMoney(double value) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        return formatter.format(value);
+
     }
 }
