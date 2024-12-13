@@ -9,7 +9,9 @@ import com.example.datadolphinsandroidapp.database.StockPortfolioDatabase;
 
 @Entity(tableName = StockPortfolioDatabase.USER_TABLE)
 public class User {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    private int userId;
+
     @NonNull
     private String user_name;
     @ColumnInfo(name = "email")
@@ -80,5 +82,14 @@ public class User {
 
     public void setCash_balance(double cash_balance) {
         this.cash_balance = cash_balance;
+    }
+
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

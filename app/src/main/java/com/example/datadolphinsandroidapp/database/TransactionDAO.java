@@ -39,15 +39,15 @@ public interface TransactionDAO {
     LiveData<List<Transaction>> getTransactionsByUserId(int userId);
 
     // Query with no aliases, matches fields in StockWithQuantity
-    @Query("SELECT ticker, purchasePrice, SUM(quantity) AS quantity FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " GROUP BY ticker")
-    LiveData<List<StockWithQuantity>> getStocksWithQuantities();
+    @Query("SELECT ticker, purchasePrice, SUM(quantity) AS quantity FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " WHERE userId = :userId GROUP BY ticker ORDER BY ticker ASC")
+    LiveData<List<StockWithQuantity>> getStocksWithQuantities(int userId);
 
     // For debug only
     @Query("SELECT * FROM transactionTable")
     List<Transaction> getAllTransactionsRaw();
 
 
-    @Query("SELECT * FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " WHERE userId = :userId AND ticker = :ticker")
+    @Query("SELECT * FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " WHERE userId = :userId AND ticker = :ticker GROUP BY ticker")
     List<Transaction> getAllTransactionsUserIdAndTicker(int userId, String ticker);
 
     @Update

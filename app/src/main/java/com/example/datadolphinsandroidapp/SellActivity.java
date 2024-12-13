@@ -13,13 +13,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.datadolphinsandroidapp.database.StockRepository;
 import com.example.datadolphinsandroidapp.database.StockWithQuantity;
 import com.example.datadolphinsandroidapp.database.entities.Transaction;
+import com.example.datadolphinsandroidapp.database.entities.User;
 import com.example.datadolphinsandroidapp.databinding.ActivitySellBinding;
 
+import java.text.NumberFormat;
 import java.util.Locale;
 
 public class SellActivity extends AppCompatActivity {
     public static final String EXTRA_TICKER = "com.example.datadolphinsandroidapp.EXTRA_TICKER";
     public static final String EXTRA_QUANTITY = "com.example.datadolphinsandroidapp.EXTRA_QUANTITY";
+    public static final String USER = "com.example.datadolphinsandroidapp.SellActivity.USER";
     public static final String TAG = "SellActivity";
 
     private ActivitySellBinding binding;
@@ -30,6 +33,8 @@ public class SellActivity extends AppCompatActivity {
     private String ticker; // Ticker passed from Portfolio
     private int availableQuantity; // Total shares available for the ticker
     private int quantity;
+    private User user;
+    private UserRepository userRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,22 +48,24 @@ public class SellActivity extends AppCompatActivity {
         repository = StockRepository.getRepository(getApplication());
 
         // Get Intent extras
-        ticker = getIntent().getStringExtra(EXTRA_TICKER);
-        availableQuantity = getIntent().getIntExtra(EXTRA_QUANTITY, 0);
+        Intent intent = getIntent();
+        ticker = intent.getStringExtra(EXTRA_TICKER);
+        availableQuantity = intent.getIntExtra(EXTRA_QUANTITY, 0);
+        String userName = intent.getStringExtra(USER);
+
+        userRepository = UserRepository.getRepository(getApplication());
+
+        userRepository.getUserByUserName(userName).observe(this, user -> {
+            this.user = user;
+            loadAvailableShares();
+        });
+
 
         if (ticker == null || ticker.isEmpty() || availableQuantity <= 0) {
             Toast.makeText(this, "Invalid stock data!", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
-        repository.getTransactionsByUserId(userId).observe(this, transactions -> {
-            for (Transaction userTransaction : transactions) {
-                if (userTransaction.getTicker().equals(ticker)) {
-                    transaction = userTransaction;
-                    binding.availableSharePlaceholder.setText(String.valueOf(transaction.getQuantity()));
-                }
-            }
-        });
 
         // Display stock details in the UI
         binding.sellTickerInputEditText.setText(ticker);
@@ -90,6 +97,16 @@ public class SellActivity extends AppCompatActivity {
         });
     }
 
+    private void loadAvailableShares() {
+        repository.getTransactionsByUserId(user.getUserId()).observe(this, transactions -> {
+            for (Transaction userTransaction : transactions) {
+                if (userTransaction.getTicker().equals(ticker)) {
+                    transaction = userTransaction;
+                    binding.availableSharePlaceholder.setText(String.valueOf(transaction.getQuantity()));
+                }
+            }
+        });
+    }
 
     private void sellStock() {
         try {
@@ -101,7 +118,7 @@ public class SellActivity extends AppCompatActivity {
             }
 
             // Calculate proceeds (example logic for stock price)
-            double pricePerStock = 50.0; // Replace this with actual price logic
+            double pricePerStock = transaction.getPurchasePrice();
             double proceeds = sellQuantity * pricePerStock;
 
             // Update transaction database
@@ -124,6 +141,11 @@ public class SellActivity extends AppCompatActivity {
                 repository.updateTransaction(transaction);
             }
 
+            // Update user cash balance for sale
+            double updatedBalance = user.getCash_balance() + proceeds;
+            user.setCash_balance(user.getCash_balance() + proceeds);
+            userRepository.insertUser(user);
+
             // Show success message and finish
             Toast.makeText(this, "Sold " + sellQuantity + " shares for $" + proceeds, Toast.LENGTH_SHORT).show();
             finish(); // Close SellActivity and return to Portfolio
@@ -133,10 +155,11 @@ public class SellActivity extends AppCompatActivity {
     }
 
 
-    public static Intent sellIntentFactory(Context context, String ticker, int quantity) {
+    public static Intent sellIntentFactory(Context context, String ticker, int quantity, String userName) {
         Intent intent = new Intent(context, SellActivity.class);
         intent.putExtra(EXTRA_TICKER, ticker);
         intent.putExtra(EXTRA_QUANTITY, quantity);
+        intent.putExtra(USER, userName);
         return intent;
     }
 }

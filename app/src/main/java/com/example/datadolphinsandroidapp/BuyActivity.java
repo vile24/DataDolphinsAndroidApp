@@ -35,8 +35,6 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
     String ticker = "AAPL";
     int quantity = 0;
 
-    int userId;
-
     static String USER = "com.example.datadolphinsandroidapp.BuyActivity.user";
 
     private User user;
@@ -166,7 +164,7 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
     }
 
     private void insertBuyStock() {
-        repository.insertTransactions(new Transaction(userId, stock.getTicker(), quantity, stock.getCost(), 0));
+        repository.insertTransactions(new Transaction(user.getUserId(), stock.getTicker(), quantity, stock.getCost(), 0));
     }
 
     private void getInformationFromDisplay() {

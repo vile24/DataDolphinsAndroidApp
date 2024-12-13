@@ -54,6 +54,7 @@ public class TransactionActivity extends AppCompatActivity {
             this.user = user;
             binding.cashBalancePlaceHolder.setText(formatMoney(user.getCash_balance()));;
             binding.totalBalancePlaceHolder.setText(formatMoney(portfolioBalance + user.getCash_balance()));
+            loadTransactions();
         });
 
 
@@ -63,25 +64,7 @@ public class TransactionActivity extends AppCompatActivity {
         binding.transactionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.transactionRecyclerView.setAdapter(adapter);
 
-        // run query get stock and qty
-        stockRepository.getStocksWithQuantities().observe(this, stockWithQuantities -> {
-            Log.d("TransactionActivity", "Number of items: " + stockWithQuantities.size());
-            portfolioBalance = 0;
-            for (StockWithQuantity stock : stockWithQuantities) {
-                Log.d("TransactionActivity", "Ticker: " + stock.getTicker() + ", Quantity: " + stock.getQuantity());
-                // TODO: Fix calculation on the portfolio - something is off
-                portfolioBalance += stock.getPurchasePrice() * stock.getQuantity();
-            }
-            adapter.submitList(stockWithQuantities);
 
-            binding.portfolioBalancePlaceHolder.setText(formatMoney(portfolioBalance));
-
-            double cashBalance = 0;
-            if (user != null) {
-                cashBalance = user.getCash_balance();
-            }
-            binding.totalBalancePlaceHolder.setText(formatMoney(portfolioBalance + cashBalance));
-        });
 
 //        intent = getIntent();
 //        userName = intent.getStringExtra(USER);
@@ -104,6 +87,28 @@ public class TransactionActivity extends AppCompatActivity {
         });
     }
 
+    private void loadTransactions() {
+        // run query get stock and qty
+        stockRepository.getStocksWithQuantities(user.getUserId()).observe(this, stockWithQuantities -> {
+            Log.d("TransactionActivity", "Number of items: " + stockWithQuantities.size());
+            portfolioBalance = 0;
+            for (StockWithQuantity stock : stockWithQuantities) {
+                Log.d("TransactionActivity", "Ticker: " + stock.getTicker() + ", Quantity: " + stock.getQuantity());
+                // TODO: Fix calculation on the portfolio - something is off
+                portfolioBalance += stock.getPurchasePrice() * stock.getQuantity();
+            }
+            adapter.submitList(stockWithQuantities);
+
+            binding.portfolioBalancePlaceHolder.setText(formatMoney(portfolioBalance));
+
+            double cashBalance = 0;
+            if (user != null) {
+                cashBalance = user.getCash_balance();
+            }
+            binding.totalBalancePlaceHolder.setText(formatMoney(portfolioBalance + cashBalance));
+        });
+    }
+
     // creating an Intent to navigate from TransactionActivity to BuyActivity.
     public static Intent transactionIntentFactory(Context context, String userName) {
         Intent intent = new Intent(context, TransactionActivity.class);
@@ -113,7 +118,7 @@ public class TransactionActivity extends AppCompatActivity {
     }
 
     private void navigateToSellActivity(StockWithQuantity stock) {
-        Intent intent = SellActivity.sellIntentFactory(this, stock.getTicker(), stock.getQuantity());
+        Intent intent = SellActivity.sellIntentFactory(this, stock.getTicker(), stock.getQuantity(), user.getUser_name());
         startActivity(intent);
     }
 
