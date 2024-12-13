@@ -104,4 +104,31 @@ public class StockRepository {
     public LiveData<List<Transaction>> getTransactionsByUserId(int userId) {
         return transactionDAO.getTransactionsByUserId(userId);
     }
+
+    // Fetch stocks with their quantities using LiveData
+
+    public LiveData<List<StockWithQuantity>> getStocksWithQuantities(int userId) {
+        return transactionDAO.getStocksWithQuantities(userId);
+    }
+
+/* Similar to this in TransactionDAO
+@Query("SELECT * FROM transactionTable")
+List<Transaction> getAllTransactionsRaw();
+ */
+    public List<Transaction> getAllTransactionsRaw() {
+        return transactionDAO.getAllTransactionsRaw();
+    }
+
+    // Update a transaction
+    public void updateTransaction(Transaction transaction) {
+        StockPortfolioDatabase.databaseWriteExecutor.execute(() -> {
+            transactionDAO.update(transaction);
+        });
+    }
+
+    public void deleteTransaction(Transaction transaction) {
+        StockPortfolioDatabase.databaseWriteExecutor.execute(() -> {
+            transactionDAO.delete(transaction);
+        });
+    }
 }

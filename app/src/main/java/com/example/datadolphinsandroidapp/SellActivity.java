@@ -11,150 +11,161 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.datadolphinsandroidapp.database.StockRepository;
-import com.example.datadolphinsandroidapp.database.entities.Stock;
+import com.example.datadolphinsandroidapp.database.StockWithQuantity;
 import com.example.datadolphinsandroidapp.database.entities.Transaction;
+import com.example.datadolphinsandroidapp.database.entities.User;
 import com.example.datadolphinsandroidapp.databinding.ActivitySellBinding;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class SellActivity extends AppCompatActivity {
-    // Key to get the ticker
     public static final String EXTRA_TICKER = "com.example.datadolphinsandroidapp.EXTRA_TICKER";
+    public static final String EXTRA_QUANTITY = "com.example.datadolphinsandroidapp.EXTRA_QUANTITY";
+    public static final String USER = "com.example.datadolphinsandroidapp.SellActivity.USER";
+    public static final String TAG = "SellActivity";
+
     private ActivitySellBinding binding;
     private StockRepository repository;
-    public static final String TAG = "DAC_STOCK";
+    private Transaction transaction;
+    private int userId;
 
-    double total = 0.0;
-    double balance = 10000;
-    Stock stock;
-    Transaction transaction;
+    private String ticker; // Ticker passed from Portfolio
+    private int availableQuantity; // Total shares available for the ticker
+    private int quantity;
+    private User user;
+    private UserRepository userRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Initializes the binding object for activity_sell.xml layout.
+
+        // Set up View Binding
         binding = ActivitySellBinding.inflate(getLayoutInflater());
-        // Sets the root view of the binding object - inflated layout (activity_sell.xml) as the content view
         setContentView(binding.getRoot());
 
-        // This retrieves the Intent object that started the current activity.
-        // Intents are used to pass data between activities in Android.
-        Intent intent = getIntent();
-        transaction = new Transaction(999, 6, 100, 500, 0);
-        // set repository
+        // Initialize Repository
         repository = StockRepository.getRepository(getApplication());
-        // get the stock from stock_table using transaction stockId
-        repository.getStockByStockId(transaction.getStockId()).observe(this, stock -> {
-            if (stock != null) {
-                this.stock = stock;
-                // set the ticker in the UI
-                binding.sellTickerInputEditText.setText(stock.getTicker());
-                Log.d(TAG, "Stock retrieved from stock database: " + stock);
-            } else {
-                Log.d(TAG, "No stocks found in database.");
-            }
+
+        // Get Intent extras
+        Intent intent = getIntent();
+        ticker = intent.getStringExtra(EXTRA_TICKER);
+        availableQuantity = intent.getIntExtra(EXTRA_QUANTITY, 0);
+        String userName = intent.getStringExtra(USER);
+
+        userRepository = UserRepository.getRepository(getApplication());
+
+        userRepository.getUserByUserName(userName).observe(this, user -> {
+            this.user = user;
+            loadAvailableShares();
         });
 
-        // set quantity
-        binding.availableSharePlaceholder.setText(String.valueOf(transaction.getQuantity()));
 
-        // TODO: get the real transaction
+        if (ticker == null || ticker.isEmpty() || availableQuantity <= 0) {
+            Toast.makeText(this, "Invalid stock data!", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
-        // Allow the user to input the quantity of the stock they want to sell
+        // Display stock details in the UI
+        binding.sellTickerInputEditText.setText(ticker);
+//        binding.availableSharePlaceholder.setText(String.valueOf(availableQuantity));
+
+        // Handle Sell Button Click
+        binding.sellButton.setOnClickListener(v -> sellStock());
+
+
         binding.sellQuantityInputEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {
-            }
-
+            public void afterTextChanged(Editable s) {}
             @Override
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
-                if (s.length() != 0)
-                    verifyQuantity();
-            }
-        });
-
-        // TODO: delete record if sell all or
-        //  calculate diff if partial sell and update qty in transaction db and update user balance
-        // TODO: update user balance
-
-        binding.sellButton.setOnClickListener(v -> {
-            int quantity = Integer.parseInt(binding.sellQuantityInputEditText.getText().toString().trim());
-            if (quantity > 0 &&  quantity < transaction.getQuantity()) {
-                //  calculate diff if partial sell and TODO: update qty in transaction db
-                int qtyDiff = transaction.getQuantity() - quantity;
-                total = quantity * stock.getCost();
-
-
-               // repository = StockRepository.getRepository(getApplication());
-                stock = repository.getStockByTicker(stock.getTicker()).getValue(); // Example query
-
-
-
-                if (stock != null && transaction.getQuantity() >= quantity) {
-                    // TODO: insert qtyDiff in transaction qty column
-
-//                    stock.setQuantity(qtyDiff);
-//                    repository.updateStock(stock);
-
-                    Log.d(TAG, "Stock sold. Remaining quantity: " + qtyDiff);
-                    finish(); // Close the activity
-                } else {
-                    Log.e(TAG, "Invalid quantity or stock not found.");
+                try {
+                    quantity = Integer.parseInt(binding.sellQuantityInputEditText.getText().toString());
+                } catch (NumberFormatException e) {
+                    quantity = 0;
+//               Toast.makeText(this, "Please enter a valid quantity.", Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                Log.e(TAG, "Quantity must be greater than 0.");
+                double proceeds = quantity * transaction.getPurchasePrice();
+                binding.sellCostPlaceHolder.setText(formatMoney(proceeds));
             }
         });
-
-
-        //getInformationFromDisplay();
-        // updateDisplay();
-
-
-
-        // Trigger database initialization. run a query so it is created immediately
-        repository.getAllStocks().observe(this, stocks -> {
-            if (stocks != null && !stocks.isEmpty()) {
-                Log.d(TAG, "Stocks retrieved from database: " + stocks.size());
-                for (Stock stock : stocks) {
-                    Log.d(TAG, "Stock: " + stock.getTicker() + ", " + stock.getCompany() + ", " + stock.getCost());
-                }
-            } else {
-                Log.d(TAG, "No stocks found in database.");
-            }
-        });
-
     }
 
-    private void verifyQuantity() {
-        // Get quantity input
+    private void loadAvailableShares() {
+        repository.getTransactionsByUserId(user.getUserId()).observe(this, transactions -> {
+            for (Transaction userTransaction : transactions) {
+                if (userTransaction.getTicker().equals(ticker)) {
+                    transaction = userTransaction;
+                    binding.availableSharePlaceholder.setText(String.valueOf(transaction.getQuantity()));
+                }
+            }
+        });
+    }
+
+    private void sellStock() {
         try {
-            if (transaction.getQuantity() != 0 ) {
-                int quantity = Integer.parseInt(binding.sellQuantityInputEditText.getText().toString().trim());
-                if (quantity > transaction.getQuantity()) {
-                    Toast.makeText(SellActivity.this, "Your quantity is larger than what you currently have.", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    double total = quantity * stock.getCost();
-                    String totalStr = "$" + String.valueOf(total);
-                    binding.sellCostPlaceHolder.setText(totalStr);
-                }
+            int sellQuantity = Integer.parseInt(binding.sellQuantityInputEditText.getText().toString().trim());
+
+            if (sellQuantity <= 0 || sellQuantity > availableQuantity) {
+                Toast.makeText(this, "Invalid quantity!", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            // Calculate proceeds (example logic for stock price)
+            double pricePerStock = transaction.getPurchasePrice();
+            double proceeds = sellQuantity * pricePerStock;
+
+            // Update transaction database
+            int remainingQuantity = availableQuantity - sellQuantity;
+
+            // Create updated transaction (provide all 5 required parameters)
+//            Transaction updatedTransaction = new Transaction(
+//                    1,                 // Dummy userId (replace with actual user ID logic)
+//                    ticker,            // Ticker passed from intent
+//                    remainingQuantity, // Remaining quantity after sale
+//                    pricePerStock,     // Purchase price (example logic)
+//                    0.0                // Sell price (optional, adjust as needed)
+//            );
+            if (remainingQuantity == 0) {
+                repository.deleteTransaction(transaction);
+            }
+            else {
+                transaction.setQuantity(remainingQuantity);
+                // Save updated transaction to the database
+                repository.updateTransaction(transaction);
+            }
+
+            // Update user cash balance for sale
+            double updatedBalance = user.getCash_balance() + proceeds;
+            user.setCash_balance(user.getCash_balance() + proceeds);
+            userRepository.insertUser(user);
+
+            // Show success message and finish
+            Toast.makeText(this, "Sold " + sellQuantity + " shares for $" + proceeds, Toast.LENGTH_SHORT).show();
+            finish(); // Close SellActivity and return to Portfolio
         } catch (NumberFormatException e) {
-            Toast.makeText(SellActivity.this, "Please enter a valid quantity.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please enter a valid quantity.", Toast.LENGTH_SHORT).show();
         }
-
     }
 
 
-    // creating an Intent to navigate from MainActivity to SellActivity.
-    public static Intent sellIntentFactory(Context context) {
-        return new Intent(context, SellActivity.class);
+    public static Intent sellIntentFactory(Context context, String ticker, int quantity, String userName) {
+        Intent intent = new Intent(context, SellActivity.class);
+        intent.putExtra(EXTRA_TICKER, ticker);
+        intent.putExtra(EXTRA_QUANTITY, quantity);
+        intent.putExtra(USER, userName);
+        return intent;
     }
 
+    private String formatMoney(double value) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        return formatter.format(value);
 
+    }
 }

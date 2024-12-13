@@ -35,6 +35,20 @@ public interface StockDAO {
 
     @Query("SELECT * FROM " + StockPortfolioDatabase.STOCK_TABLE + " WHERE stockId == :stockId")
     LiveData<Stock> getStockByStockId(int stockId);
+
+        // Query to get stock names and quantities using LiveData
+//        @Query("SELECT s.ticker AS stockName, t.quantity AS stockQuantity " +
+//                "FROM stockTable AS s " +
+//                "LEFT JOIN transactionTable AS t " +
+//                "ON s.stockId = t.stockId")
+//        LiveData<List<StockWithQuantity>> getStocksWithQuantities();
+
+//    @Query("SELECT s.ticker AS stockName, t.quantity AS stockQuantity " +
+//            "FROM stockTable AS s " +
+//            "LEFT JOIN transactionTable AS t " +
+//            "ON s.stockId = t.stockId")
+//    LiveData<List<StockWithQuantity>> getStocksWithQuantities();
+
 }
 
 

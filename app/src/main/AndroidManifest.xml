@@ -16,6 +16,9 @@
             android:name=".PortfolioActivity"
             android:exported="false" />
         <activity
+            android:name=".TransactionActivity"
+            android:exported="false" />
+        <activity
             android:name=".SellActivity"
             android:exported="false" />
         <activity
@@ -30,12 +33,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"
-            android:exported="true">
-        </activity>
-        <activity android:name=".NewUserActivity"
-            android:exported="true">
-        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".NewUserActivity"
+            android:exported="true"></activity>
     </application>
 
 </manifest>

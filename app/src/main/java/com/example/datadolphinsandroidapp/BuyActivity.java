@@ -16,8 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.datadolphinsandroidapp.database.StockRepository;
 import com.example.datadolphinsandroidapp.database.entities.Stock;
 import com.example.datadolphinsandroidapp.database.entities.Transaction;
+import com.example.datadolphinsandroidapp.database.entities.User;
 import com.example.datadolphinsandroidapp.databinding.ActivityBuyBinding;
 
+import java.text.NumberFormat;
 import java.util.Locale;
 
 public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
@@ -30,16 +32,17 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
     public static final String TAG = "DAC_STOCK";
 
     // Instance variable
-    String ticker = "";
+    String ticker = "AAPL";
     int quantity = 0;
 
-    // This is dummy data for test user. Need to get userID from Extra_User
-    int userId = 999;
+    static String USER = "com.example.datadolphinsandroidapp.BuyActivity.user";
+
+    private User user;
+
     Stock stock;
     double totalCost = 0.0;   // cost * qty
 
     // This is dummy data for test user.
-    double balance = 100000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,17 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
         binding = ActivityBuyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Get the ticker passed from MainActivity
         Intent intent = getIntent();
+        String userName = intent.getStringExtra(USER);
+
+        UserRepository userRepository = UserRepository.getRepository(getApplication());
+
+        userRepository.getUserByUserName(userName).observe(this, user -> {
+            this.user = user;
+            binding.availableCashBalancePlaceholder.setText(formatMoney(user.getCash_balance()));
+        });
+
+        // Get the ticker passed from TransactionActivity
         initBalanceDisplay();
         // Key to get pass
         ticker = intent.getStringExtra(EXTRA_TICKER);
@@ -96,12 +108,14 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
             @Override
             public void onClick(View v) {
                 // TODO : make a confirm buy
-                if (balance < totalCost) {
+                if (user.getCash_balance() < totalCost) {
                     Toast.makeText(BuyActivity.this, "Not Enough Balance!", Toast.LENGTH_LONG).show();
                 }
                 else {
                     Toast.makeText(BuyActivity.this, "Buy Successful!", Toast.LENGTH_LONG).show();
-                    balance = balance - totalCost;
+                    user.setCash_balance(user.getCash_balance() - totalCost);
+                    // hope it will replace the user balance.
+                    userRepository.insertUser(user);
                     initBalanceDisplay();
                     insertBuyStock();
                 }
@@ -135,7 +149,7 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
                 totalCost = stock.getCost() * quantity;
 
                 // Update the cost placeholder with the calculated total
-                binding.costPlaceholder.setText(String.format(Locale.US, "$%.2f", totalCost));
+                binding.costPlaceholder.setText(formatMoney(totalCost));
             } else {
                 toastMaker(String.format("%s is not a valid ticker", ticker));
                 // Reset cursor to the beginning of the input
@@ -147,7 +161,7 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
     }
 
     private void insertBuyStock() {
-        repository.insertTransactions(new Transaction(userId, stock.getStockId(), quantity, stock.getCost(), 0));
+        repository.insertTransactions(new Transaction(user.getUserId(), stock.getTicker(), quantity, stock.getCost(), 0));
     }
 
     private void getInformationFromDisplay() {
@@ -164,7 +178,9 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
 
     // Set initial balance in display
     private void initBalanceDisplay() {
-        binding.availableCashBalancePlaceholder.setText(String.format(Locale.US, "$%.2f", balance));;
+        if (user != null) {
+            binding.availableCashBalancePlaceholder.setText(formatMoney(user.getCash_balance()));
+        }
         binding.tickerInputEditText.setText("");
         binding.quantityInputEditText.setText("");
         binding.costPlaceholder.setText("$0.0");
@@ -174,9 +190,19 @@ public class BuyActivity extends AppCompatActivity implements LifecycleOwner {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    // creating an Intent to navigate from MainActivity to BuyActivity.
-    public static Intent buyIntentFactory(Context context) {
-        return new Intent(context, BuyActivity.class);
+    // creating an Intent to navigate from BuyActivity to BuyActivity.
+    public static Intent buyIntentFactory(Context context, String userName) {
+        Intent intent = new Intent(context, BuyActivity.class);
+        intent.putExtra(USER, userName);
+        // intent.getDataString();
+        return intent;
+
+    }
+
+    private String formatMoney(double value) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        return formatter.format(value);
+
     }
 
 }

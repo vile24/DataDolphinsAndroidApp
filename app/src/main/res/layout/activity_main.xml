@@ -7,16 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--    <TextView-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="Hello World!"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"w-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-
     <TextView
         android:id="@+id/portTitle"
         android:layout_width="370dp"
@@ -43,30 +33,21 @@
         app:layout_constraintTop_toBottomOf="@+id/portTitle"
         app:layout_constraintWidth_percent="0.90" />
 
+
     <Button
 
-        android:id="@+id/buyButton"
-        android:layout_width="wrap_content"
+        android:id="@+id/transactionButton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/go_to_buy_activity"
-        android:textSize="36sp"
+        android:layout_marginTop="76dp"
+        android:gravity="center"
+        android:text="@string/transactions"
+        android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/portText" />
 
-    <Button
-        android:id="@+id/SellButton"
-        android:layout_width="293dp"
-        android:layout_height="128dp"
-        android:text="@string/sell_button"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@id/PortfolioButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buyButton"
-        app:layout_constraintVertical_bias="0.166" />
     <Button
         android:id="@+id/PortfolioButton"
         android:layout_width="293dp"
@@ -77,21 +58,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/SellButton"
+        app:layout_constraintTop_toBottomOf="@id/portBack"
         app:layout_constraintVertical_bias="0.166" />
 
     <Button
-
         android:id="@+id/portBack"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="76dp"
         android:gravity="center"
         android:text="@string/back"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SellButton"
+        app:layout_constraintTop_toBottomOf="@+id/transactionButton"
         app:layout_constraintWidth_percent="0.90" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

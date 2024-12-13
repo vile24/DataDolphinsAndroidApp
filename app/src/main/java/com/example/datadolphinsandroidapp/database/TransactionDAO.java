@@ -2,9 +2,11 @@ package com.example.datadolphinsandroidapp.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.datadolphinsandroidapp.database.entities.Transaction;
 
@@ -16,6 +18,7 @@ public interface TransactionDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Transaction transaction);    //Insert a single transaction
+
     // Insert multiple transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Transaction... transaction);    // Accepts varargs or an array of Stock
@@ -25,11 +28,32 @@ public interface TransactionDAO {
     void deleteAll();
 
     // Retrieve a specific user's transactions by their userId
-    @Query("SELECT * FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " WHERE userId = :userId")
-    LiveData<List<Transaction>> getTransactionsByUserId(int userId);
+    @Query("SELECT * FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " WHERE ticker = :ticker")
+    LiveData<List<Transaction>> getTransactionsByTicker(String ticker);
 
     // Retrieve all transactions from the table
     @Query("SELECT * FROM " + StockPortfolioDatabase.TRANSACTION_TABLE)
     LiveData<List<Transaction>> getAllTransactions();
 
+    @Query("SELECT * FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " WHERE userId = :userId")
+    LiveData<List<Transaction>> getTransactionsByUserId(int userId);
+
+    // Query with no aliases, matches fields in StockWithQuantity
+    @Query("SELECT ticker, purchasePrice, SUM(quantity) AS quantity FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " WHERE userId = :userId GROUP BY ticker ORDER BY ticker ASC")
+    LiveData<List<StockWithQuantity>> getStocksWithQuantities(int userId);
+
+    // For debug only
+    @Query("SELECT * FROM transactionTable")
+    List<Transaction> getAllTransactionsRaw();
+
+
+    @Query("SELECT * FROM " + StockPortfolioDatabase.TRANSACTION_TABLE + " WHERE userId = :userId AND ticker = :ticker GROUP BY ticker")
+    List<Transaction> getAllTransactionsUserIdAndTicker(int userId, String ticker);
+
+    @Update
+    void update(Transaction transaction);
+
+
+    @Delete
+    void delete(Transaction transaction);
 }

@@ -54,8 +54,8 @@ public class PortfolioActivity extends AppCompatActivity {
                 Toast.makeText(PortfolioActivity.this, "Navigating to Sell Page", Toast.LENGTH_SHORT).show();
 
                 //intent to got to sellactivity
-                Intent intent = SellActivity.sellIntentFactory(PortfolioActivity.this);
-                startActivity(intent);
+//                Intent intent = SellActivity.sellIntentFactory(PortfolioActivity.this);
+//                startActivity(intent);
             }
         });
     }
