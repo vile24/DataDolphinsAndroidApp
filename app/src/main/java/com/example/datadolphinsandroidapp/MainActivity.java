@@ -1,13 +1,17 @@
 package com.example.datadolphinsandroidapp;
 
+import static android.os.Build.USER;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.datadolphinsandroidapp.database.entities.User;
+import com.example.datadolphinsandroidapp.database.StockRepository;
 import com.example.datadolphinsandroidapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,13 +53,28 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        /**
+         * setting up clickable button for PortfolioActivity
+         */
+        binding.PortfolioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //intent to go from MainActivity to PortfolioActivity
+                Intent intent = new Intent(MainActivity.this, PortfolioActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    public static Intent openMain(Context context, User user){
+    public static Intent openMain(Context context, String user){
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra("USER", user.getUser_name());
+        intent.putExtra("USER", user);
         // intent.getDataString();
         return intent;
     }
+
+
+
 
 }

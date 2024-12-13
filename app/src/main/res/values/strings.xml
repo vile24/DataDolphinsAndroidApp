@@ -24,10 +24,25 @@
     <string name="current_shares">Current Shares</string>
     <string name="enter_sell_quantity">Enter Sell Quantity</string>
     <string name="sell_button">Sell Button</string>
+    <string name="user_s_portfolio"><![CDATA[<User>\'s Portfolio]]></string>
     <string name="portfolio_placeholder">Current Balance:&#xA;$000&#xA;Portfolio Value:&#xA;$000&#xA;Total Balance:&#xA;$000 </string>
     <string name="verify_password">Verify Password</string>
     <string name="new_password">New password</string>
     <string name="new_username">New username</string>
     <string name="new_user">New user</string>
-    <string name="user_s_portfolio"><![CDATA[<User>\'s Portfolio]]></string>
+    <string name="portfolio">Portfolio</string>
+    <string name="portfolio_list">Portfolio List</string>
+    <string name="portfolio_page">Portfolio Page</string>
+    <string name="user_stocks">User stocks</string>
+    <string name="sell_stock">Sell Stock</string>
+    <string name="hello">Hello</string>
+    <string name="stock_name">Stock Name</string>
+    <string name="stock_symbol">Stock Symbol</string>
+    <string name="price">Price</string>
+    <string name="sells">Sell</string>
+    <string name="stock_names">Stock Name</string>
+    <string name="quantitys">Quantity</string>
+    <string name="sellss">Sell</string>
+    <string name="user_stock">user stock</string>
+    <string name="cell">cell</string>
 </resources>
