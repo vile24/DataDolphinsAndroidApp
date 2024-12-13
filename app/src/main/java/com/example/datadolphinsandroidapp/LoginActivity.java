@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
             if (user != null && enteredPass.equals(user.getPassword())) {
                 Toast.makeText(this, "Logging In", Toast.LENGTH_SHORT).show();
 
-                Intent intent = MainActivity.openMain(getApplicationContext(), user);
+                Intent intent = MainActivity.openMain(getApplicationContext(), user.getUser_name());
                 startActivity(intent);
 
                 finish();
