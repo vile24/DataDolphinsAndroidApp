@@ -1,9 +1,8 @@
 package com.example.datadolphinsandroidapp;
-import android.app.Application;
 
+import android.app.Application;
 import androidx.lifecycle.LiveData;
 import com.example.datadolphinsandroidapp.database.StockPortfolioDatabase;
-
 import com.example.datadolphinsandroidapp.database.entities.User;
 import java.util.ArrayList;
 import java.util.List;

@@ -19,9 +19,7 @@ import java.util.concurrent.Executors;
 
 // This is the database class for the app.
 // When adding a new table, make sure to increase the version number.
-
 @Database(entities = {Stock.class, User.class, Transaction.class}, version = 7, exportSchema = false)
-
 public abstract class StockPortfolioDatabase extends RoomDatabase {
 
     public static final String USER_TABLE = "userTable";
